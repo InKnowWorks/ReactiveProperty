@@ -56,6 +56,10 @@
 		
     <span class="caption-text">Features</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ReactiveCommandClass/">ReactiveCommand class</a>
+                </li>
                 <li class=" current">
                     
     <a class="current" href="./">ReactiveProperty class</a>
@@ -70,6 +74,12 @@
             <li><a class="toctree-l4" href="#how-to-create-a-reactiveproperty-instance">How to create a ReactiveProperty instance</a></li>
         
             <li><a class="toctree-l4" href="#validation">Validation</a></li>
+        
+            <li><a class="toctree-l4" href="#the-mode-of-reactiveproperty">The mode of ReactiveProperty</a></li>
+        
+            <li><a class="toctree-l4" href="#readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</a></li>
+        
+            <li><a class="toctree-l4" href="#unsubscribe">Unsubscribe</a></li>
         
         </ul>
     
@@ -285,16 +295,17 @@ var formalName = name.Select(x =&gt; $&quot;Dear {x}&quot;)
 
 <p>All IObservable instances can become a ReactiveProperty. </p>
 <h2 id="validation">Validation</h2>
-<p>The ReactiveProperty class implements the INotifyDataErrorInfo interface.
-You can set the custom validation logic using the SetValidateNotifyError method.</p>
+<p>The ReactiveProperty class implements the INotifyDataErrorInfo interface.</p>
+<h3 id="set-custom-validation-logics">Set custom validation logics</h3>
+<p>You can set the custom validation logic using the SetValidateNotifyError method.</p>
 <pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;()
     .SetValidateNotifyError(x =&gt; string.IsNullOrWhiteSpace(x) ? &quot;Error message&quot; : null);
 </code></pre>
 
 <p>In the valid value case, the validation logic should return null.
 In the invalid value case, the logic should return a error message.</p>
-<h3 id="validation-with-the-systemcomponentsdataannotations">Validation with the System.Components.DataAnnotations</h3>
-<p>This class can integrate with the DataAnnotations.
+<h3 id="work-with-dataannotations">Work with DataAnnotations</h3>
+<p>This class can work together with the DataAnnotations.
 You can set the validation attribute using the SetValidateAttribute method.</p>
 <pre><code class="cs">class ViewModel
 {
@@ -311,6 +322,264 @@ You can set the validation attribute using the SetValidateAttribute method.</p>
     }
 }
 </code></pre>
+
+<p>WPF is integrated the INotifyDataErrorInfo interface. See below.</p>
+<p><img alt="WPF Validation" src="../images/wpf-validation.png" /></p>
+<h3 id="handling-validation-errors">Handling validation errors</h3>
+<p>Other platform can't display the error message from the INofityDataErrorInfo interface.
+The ReactiveProperty class have some properties for handling validation errors.</p>
+<p>A first property is <code>ObserveErrorChanged</code>.
+This type is <code>IObservable&lt;IEnumerable&gt;</code>. You can convert to an error message from IEnumerable. See below.</p>
+<pre><code class="cs">class ViewModel
+{
+    // Set validation attributes
+    [Required(ErrorMessage = &quot;The name is required.&quot;)]
+    [StringLength(100, ErrorMessage = &quot;The name length should be lower than 30.&quot;)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ReactiveProperty&lt;string&gt; NameErrorMessage { get; }
+
+    public ViewModel()
+    {
+        Name = new ReactiveProperty&lt;string&gt;()
+            // Set validation attributes into the ReactiveProperty.
+            .SetValidateAttribute(() =&gt; Name);
+
+        // Handling an error message
+        NameErrorMessage = Name.ObserveErrorChanged
+            .Select(x =&gt; x?.OfType&lt;string&gt;()?.FirstOrDefault())
+            .ToReactiveProperty();
+    }
+}
+</code></pre>
+
+<p>Bind <code>NameErrorMessage.Value</code> property to a text control. An error message can be displayed.</p>
+<p>In the case of UWP, see below.</p>
+<pre><code class="cs">public sealed partial class MainPage : Page
+{
+    private ViewModel ViewModel { get; } = new ViewModel();
+    public MainPage()
+    {
+        this.InitializeComponent();
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;TextBlock Text=&quot;Name&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot; /&gt;
+        &lt;TextBox Text=&quot;{x:Bind ViewModel.Name.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;{x:Bind ViewModel.NameErrorMessage.Value, Mode=OneWay}&quot;
+                   Foreground=&quot;Red&quot;
+                   Margin=&quot;5,0&quot;
+                   Style=&quot;{ThemeResource BodyTextBlockStyle}&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="A validation error message" src="../images/validation-errormessage.png" /></p>
+<p>A next property is <code>ObserveHasErrors</code>. The <code>ObserveHasErrors</code> property type is <code>IObservable&lt;bool&gt;</code>.
+In popular input form case, combine <code>ObserveHasErrors</code> property values very useful.</p>
+<p>This sample program is that create a HasErros property that type is ReactiveProperty&lt;bool&gt; that combine two ReactiveProperty's ObserveHasErrors properties.</p>
+<pre><code class="cs">public class ViewModel
+{
+    // Set validation attributes
+    [Required(ErrorMessage = &quot;The name is required.&quot;)]
+    [StringLength(100, ErrorMessage = &quot;The name length should be lower than 30.&quot;)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    [Required(ErrorMessage = &quot;The memo is required.&quot;)]
+    public ReactiveProperty&lt;string&gt; Memo { get; }
+
+    public ReactiveProperty&lt;bool&gt; HasErrors { get; }
+
+    public ViewModel()
+    {
+        Name = new ReactiveProperty&lt;string&gt;()
+            .SetValidateAttribute(() =&gt; Name);
+
+        Memo = new ReactiveProperty&lt;string&gt;()
+            .SetValidateAttribute(() =&gt; Memo);
+
+        // You can combine some ObserveHasErrors values.
+        HasErrors = new[]
+            {
+                Name.ObserveHasErrors,
+                Memo.ObserveHasErrors,
+            }.CombineLatest(x =&gt; x.Any(y =&gt; y))
+            .ToReactiveProperty();
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;TextBlock Text=&quot;Name&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot; 
+                   Margin=&quot;5&quot; /&gt;
+        &lt;TextBox Text=&quot;{x:Bind ViewModel.Name.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;Memo&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot;
+                   Margin=&quot;5&quot; /&gt;
+        &lt;TextBox Text=&quot;{x:Bind ViewModel.Memo.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;HasErrors&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot;
+                   Margin=&quot;5&quot; /&gt;
+        &lt;CheckBox IsChecked=&quot;{x:Bind ViewModel.HasErrors.Value, Mode=OneWay}&quot;
+                  IsEnabled=&quot;False&quot;
+                  Margin=&quot;5&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="HasErrors" src="../images/haserrors-handling.png" /></p>
+<p><img alt="HasErrors2" src="../images/haserrors-handling2.png" /></p>
+<p>The last property is <code>HasErrors</code>. It is a just bool property.</p>
+<pre><code class="cs">public class ViewModel
+{
+    // Set validation attributes
+    [Required(ErrorMessage = &quot;The name is required.&quot;)]
+    [StringLength(100, ErrorMessage = &quot;The name length should be lower than 30.&quot;)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ViewModel()
+    {
+        Name = new ReactiveProperty&lt;string&gt;()
+            .SetValidateAttribute(() =&gt; Name);
+    }
+
+    public void DoSomething()
+    {
+        if (Name.HasErrors)
+        {
+            // invalid value case
+        }
+        else
+        {
+            // valid value case
+        }
+    }
+}
+</code></pre>
+
+<h3 id="dont-need-initial-validation-error">Don't need initial validation error</h3>
+<p>In the default behavior, the ReactiveProperty report errors when the validation logic set.
+If you don't need the initial validation error, then you can skip the error.
+Just call the Skip method.</p>
+<pre><code class="cs">class ViewModel
+{
+    // Set validation attributes
+    [Required(ErrorMessage = &quot;The name is required.&quot;)]
+    [StringLength(100, ErrorMessage = &quot;The name length should be lower than 30.&quot;)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ReactiveProperty&lt;string&gt; NameErrorMessage { get; }
+
+    public ViewModel()
+    {
+        Name = new ReactiveProperty&lt;string&gt;()
+            .SetValidateAttribute(() =&gt; Name);
+
+        // Handling an error message
+        NameErrorMessage = Name.ObserveErrorChanged
+            .Skip(1) // Skip the first error.
+            .Select(x =&gt; x?.OfType&lt;string&gt;()?.FirstOrDefault())
+            .ToReactiveProperty();
+    }
+}
+</code></pre>
+
+<h2 id="the-mode-of-reactiveproperty">The mode of ReactiveProperty</h2>
+<p>The ReactiveProperty class call a OnNext callback when the Subscribe method called.</p>
+<pre><code class="cs">var x = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;);
+x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; initial value
+</code></pre>
+
+<p>You could change this behavior when the ReactiveProperty instance create.
+The constructor and the ToReactiveProperty method have a mode argument.
+This can be set following values.</p>
+<ul>
+<li>ReactivePropertyMode.None<ul>
+<li>ReactiveProperty doesn't call an OnNext callback when the Subscribe method call. And call an OnNext callback if the same value set.</li>
+</ul>
+</li>
+<li>ReactivePropertyMode.DistinctUntilChanged<ul>
+<li>This doesn't call an OnNext callback if the same value set.</li>
+</ul>
+</li>
+<li>ReactivePropertyMode.RaiseLatestValueOnSubscribe<ul>
+<li>This calls an OnNext callback when the Subscribe method call.</li>
+</ul>
+</li>
+</ul>
+<p>The default value is <code>ReactivePropertyMode.DistinctUntilChanged | ReactivePropertyMode.RaiseLatestValueOnSubscribe</code>.</p>
+<p>If you don't need this behavior then you can set the ReactivePropertyMode.None value.</p>
+<pre><code class="cs">var x = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;, mode: ReactivePropertyMode.None);
+x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; don't output the value
+x.Value = &quot;initial value&quot;; // -&gt; initial value
+</code></pre>
+
+<h2 id="readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</h2>
+<p>If you never set the Value property, then you can use the ReadOnlyReactiveProperty class.
+This class can't set the property, and other behavior is same the ReactiveProperty class.
+The ReadOnlyReactiveProperty class is created from ToReadOnlyReactiveProperty extension method.</p>
+<p>See below.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public ReactiveProperty&lt;string&gt; Input { get; }
+
+    // Output never set value.
+    public ReadOnlyReactiveProperty&lt;string&gt; Output { get; }
+
+    public ViewModel()
+    {
+        Input = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
+        Output = Input
+            .Delay(TimeSpan.FromSeconds(1))
+            .Select(x =&gt; x.ToUpper())
+            .ToReadOnlyReactiveProperty(); // convert to ReadOnlyReactiveProperty
+    }
+}
+</code></pre>
+
+<h2 id="unsubscribe">Unsubscribe</h2>
+<p>The ReactiveProperty class implements the IDisposable interface.
+When the Dispose method called, the ReactiveProperty class release all subscription.
+In other instance's events subscribe, then you should call the Dispose method when the end of ViewModel lifecycle.</p>
+<pre><code class="cs">public class ViewModel : IDisposable
+{
+    public ReadOnlyReactiveProperty&lt;string&gt; Time { get; }
+
+    public ViewModel()
+    {
+        Time = Observable.Interval(TimeSpan.FromSeconds(1))
+            .Select(_ =&gt; DateTime.Now.ToString(&quot;yyyy/MM/dd HH:mm:ss&quot;))
+            .ToReadOnlyReactiveProperty();
+    }
+
+    public void Dispose()
+    {
+        // Unsbscribe
+        Time.Dispose();
+    }
+}
+</code></pre>
               
             </div>
           </div>
@@ -321,7 +590,7 @@ You can set the validation attribute using the SetValidateAttribute method.</p>
         <a href="../../getting-started/uwp/" class="btn btn-neutral float-right" title="Uwp">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="ReactiveProperty documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ReactiveCommandClass/" class="btn btn-neutral" title="ReactiveCommand class"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -347,7 +616,7 @@ You can set the validation attribute using the SetValidateAttribute method.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../ReactiveCommandClass/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../../getting-started/uwp/" style="color: #fcfcfc">Next &raquo;</a></span>
