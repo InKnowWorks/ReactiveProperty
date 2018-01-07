@@ -71,6 +71,12 @@
             
     <li class="toctree-l3"><a href="#work-with-plane-model-layer-objects">Work with plane model layer objects</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#connect-to-classes-that-implement-inotifypropertychanged">Connect to classes that implement INotifyPropertyChanged</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -134,6 +140,166 @@
               
                 <h1 id="work-with-plane-model-layer-objects">Work with plane model layer objects</h1>
 <p>The classes of this library can work together with POCO classes.</p>
+<h2 id="connect-to-classes-that-implement-inotifypropertychanged">Connect to classes that implement INotifyPropertyChanged</h2>
+<p>ReactiveProperty provides many features that synchronize to POCO class instance.</p>
+<h3 id="one-way-synchronization">One-way synchronization</h3>
+<p>ToObserveProperty extension method of INotifyPropertyChanged interface convert INotifyPropertyChanged to IObservable&lt;T&gt;.
+IObservable can convert to ReactiveProperty. It means that can be one-way synchronization to ReactiveProperty from INotifyPropertyChanged.</p>
+<p>For example, below class is.</p>
+<pre><code class="cs">public class BindableBase : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void RaisePropertyChanged([CallerMemberName]string propertyName = null) =&gt;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    protected void SetProperty&lt;T&gt;(ref T field, T value, [CallerMemberName]string propertyName = null)
+    {
+        if (Comparer&lt;T&gt;.Default.Compare(field, value) == 0)
+        {
+            return;
+        }
+
+        field = value;
+        RaisePropertyChanged(propertyName);
+    }
+}
+
+public class Person : BindableBase
+{
+    private string _name;
+    public string Name
+    {
+        get { return _name; }
+        set { SetProperty(ref _name, value); }
+    }
+
+    private int _age;
+    public int Age
+    {
+        get { return _age; }
+        set { SetProperty(ref _age, value); }
+    }
+}
+</code></pre>
+
+<p>One-way synchronization is the following code.</p>
+<pre><code class="cs">// using Reactive.Bindings.Extensions;
+public class ViewModel
+{
+    private Person Person { get; } = new Person();
+
+    public ReadOnlyReactiveProperty&lt;string&gt; Name { get; }
+
+    public ReactiveCommand UpdatePersonCommand { get; }
+
+    public ViewModel()
+    {
+        Name = Person
+            // Convert the Name PropertyChanged event to IObservable&lt;string&gt;
+            .ObserveProperty(x =&gt; x.Name)
+            // Convert to ReadOnlyReactiveProperty&lt;string&gt;
+            .ToReadOnlyReactiveProperty();
+
+        UpdatePersonCommand = new ReactiveCommand()
+            .WithSubscribe(() =&gt;
+            {
+                // Update the name property.
+                Person.Name = &quot;Tanaka&quot;;
+            });
+    }
+}
+</code></pre>
+
+<h3 id="two-way-synchronization">Two-way synchronization</h3>
+<p>ToReactivePropertyAsSynchronized extension method provides two-way synchronization.</p>
+<pre><code class="cs">// using Reactive.Bindings.Extensions;
+public class ViewModel
+{
+    public Person Person { get; } = new Person();
+
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ViewModel()
+    {
+        Name = Person.ToReactivePropertyAsSynchronized(x =&gt; x.Name);
+    }
+}
+</code></pre>
+
+<p>UWP platfrom example is below.</p>
+<p>MainPage.xaml.cs</p>
+<pre><code class="cs">public sealed partial class MainPage : Page
+{
+    private ViewModel ViewModel { get; } = new ViewModel();
+    public MainPage()
+    {
+        this.InitializeComponent();
+    }
+}
+</code></pre>
+
+<p>MainPage.xaml</p>
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;TextBlock Text=&quot;ReactiveProperty&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot;
+                   Margin=&quot;5,0&quot; /&gt;
+        &lt;TextBox Text=&quot;{x:Bind ViewModel.Name.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;Person.Name&quot;
+                   Style=&quot;{ThemeResource CaptionTextBlockStyle}&quot;
+                   Margin=&quot;5,0&quot; /&gt;
+        &lt;TextBox Text=&quot;{x:Bind ViewModel.Person.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="Two-way synchronization" src="../images/work-together-with-poco-two-way-synchronization.gif" /></p>
+<p>ToSynchronizedReactiveProperty extension method can add convert logic and convert-back logic.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public Person Person { get; } = new Person();
+
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ViewModel()
+    {
+        Name = Person.ToReactivePropertyAsSynchronized(x =&gt; x.Name,
+            convert: x =&gt; string.IsNullOrWhiteSpace(x) ? &quot;&quot; : $&quot;{x}-san&quot;,
+            convertBack: x =&gt; Regex.Replace(x, &quot;-san$&quot;, &quot;&quot;));
+    }
+}
+</code></pre>
+
+<p><img alt="Convert and convert-back" src="../images/work-together-with-poco-two-way-synchronization-and-convert.gif" /></p>
+<p>When an ignoreValidationErrorValue argument set to true, then stop the synchronization if validation error occurred.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public Person Person { get; } = new Person();
+
+    [StringLength(10)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ViewModel()
+    {
+        Name = Person.ToReactivePropertyAsSynchronized(x =&gt; x.Name,
+            convert: x =&gt; string.IsNullOrWhiteSpace(x) ? &quot;&quot; : $&quot;{x}-san&quot;,
+            convertBack: x =&gt; Regex.Replace(x, &quot;-san$&quot;, &quot;&quot;),
+            ignoreValidationErrorValue: true)  // activate this behavior
+            .SetValidateAttribute(() =&gt; Name); // set validation logic
+    }
+}
+</code></pre>
+
+<p><img alt="Ignore validation error value" src="../images/work-together-with-poco-two-way-synchronization-and-ignoreValidationError.gif" /></p>
               
             </div>
           </div>
