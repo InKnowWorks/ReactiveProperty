@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>ReactiveProperty class - ReactiveProperty documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ReactiveProperty class";
+    var mkdocs_page_input_path = "features\\ReactivePropertyClass.md";
+    var mkdocs_page_url = "/features/ReactivePropertyClass/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ReactiveProperty documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">ReactiveProperty documentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Features</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">ReactiveProperty class</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#reactiveproperty-class">ReactiveProperty class</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#use-with-the-xaml-platform">Use with the XAML platform</a></li>
+        
+            <li><a class="toctree-l4" href="#how-to-create-a-reactiveproperty-instance">How to create a ReactiveProperty instance</a></li>
+        
+            <li><a class="toctree-l4" href="#validation">Validation</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/uwp/">Uwp</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/wpf/">Wpf</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/xamarin-forms/">Xamarin forms</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ReactiveProperty documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Features &raquo;</li>
+        
+      
+    
+    <li>ReactiveProperty class</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="reactiveproperty-class">ReactiveProperty class</h1>
+<p>ReactiveProperty is core class of this library.
+This has following features.</p>
+<ul>
+<li>Implements the INotifyPropretyChanged interface.<ul>
+<li>The value property raise the PropertyChanged event.</li>
+</ul>
+</li>
+<li>Implements the IObservable&lt;T&gt; interface.</li>
+</ul>
+<p>Yes, The value property can bind to XAML control's property.
+And the class call the IObserver&lt;T&gt;#OnNext method when set the value.</p>
+<p>A sample code is below.</p>
+<pre><code class="cs">using Reactive.Bindings;
+using System;
+
+namespace ReactivePropertyEduApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // create from defualt constructor(default value is null)
+            var name = new ReactiveProperty&lt;string&gt;();
+            // setup the event handler and the onNext callback.
+            name.PropertyChanged += (_, e) =&gt; Console.WriteLine($&quot;PropertyChanged: {e.PropertyName}&quot;);
+            name.Subscribe(x =&gt; Console.WriteLine($&quot;OnNext: {x}&quot;));
+
+            // update the value property.
+            name.Value = &quot;neuecc&quot;;
+            name.Value = &quot;xin9le&quot;;
+            name.Value = &quot;okazuki&quot;;
+        }
+    }
+}
+</code></pre>
+
+<p>The output of this program is below.</p>
+<pre><code>OnNext:
+OnNext: neuecc
+PropertyChanged: Value
+OnNext: xin9le
+PropertyChanged: Value
+OnNext: okazuki
+PropertyChanged: Value
+</code></pre>
+
+<p>What's deferent between PropertyChanged and onNext callback?
+The onNext is called when subscribe. The PropertyChanged isn't called when added the event handler. And the onNext callback's argument is the property value, the PropertyChanged argument don't have the property value.</p>
+<p>The PropertyChanged event was provided for the data binding. In the normal case, you should use the Reactive Extensions methods.</p>
+<h2 id="use-with-the-xaml-platform">Use with the XAML platform</h2>
+<p>The ReactiveProperty class is designed for the XAML platform which is like WPF, UWP, and Xamarin.Forms.
+This class can be used the ViewModel layer. </p>
+<p>In the case that don't use the ReactiveProperty, the ViewModel class wrote the below. </p>
+<pre><code class="cs">public class MainPageViewModel : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private string _name;
+    public string Name
+    {
+        get =&gt; _name;
+        set
+        {
+            _name = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+        }
+    }
+
+    // Other properties are defined similar codes.
+}
+</code></pre>
+
+<p>And those properties binds in the XAML code.</p>
+<pre><code class="xml">&lt;!-- In the WPF --&gt;
+&lt;TextBox Text=&quot;{Binding Name}&quot; /&gt;
+
+&lt;!-- In the UWP(Runtime data binding) --&gt;
+&lt;TextBox Text=&quot;{Binding Name}&quot; /&gt;
+
+&lt;!-- In the UWP(Compile time data binding) --&gt;
+&lt;TextBox Text=&quot;{x:Bind ViewModel.Name, Mode=TwoWay}&quot; /&gt;
+
+&lt;!-- In the Xamarin.Forms --&gt;
+&lt;Entry Text=&quot;{Binding Name}&quot; /&gt;
+</code></pre>
+
+<p>In the case that uses the ReactiveProperty, The ViewModel code becomes very simple!</p>
+<pre><code class="cs">// The INotifyPropertyChanged interface must implement when using the WPF.
+// Because, if you don't implement this, then memory leak occurred.
+public class MainPageViewModel
+{
+    public ReactiveProperty&lt;string&gt; Name { get; } = new ReactiveProperty&lt;string&gt;();
+
+    // Other properties are defined similar codes.
+}
+</code></pre>
+
+<p>When binding in the XAML code, you must add the <code>.Value</code> in the binding path.
+This is an only limitation of this library.</p>
+<pre><code class="xml">&lt;!-- In the WPF --&gt;
+&lt;TextBox Text=&quot;{Binding Name.Value}&quot; /&gt;
+
+&lt;!-- In the UWP(Runtime data binding) --&gt;
+&lt;TextBox Text=&quot;{Binding Name}.Value&quot; /&gt;
+
+&lt;!-- In the UWP(Compile time data binding) --&gt;
+&lt;TextBox Text=&quot;{x:Bind ViewModel.Name.Value, Mode=TwoWay}&quot; /&gt;
+
+&lt;!-- In the Xamarin.Forms --&gt;
+&lt;Entry Text=&quot;{Binding Name.Value}&quot; /&gt;
+</code></pre>
+
+<blockquote>
+<p>We forget the <code>.Value</code> sometimes. If you have a ReSharper license, then you can use this plugin.
+<a href="https://resharper-plugins.jetbrains.com/packages/ReSharper.RpCorrector/">ReactiveProperty XAML Binding Corrector</a>
+Highlight the missing of ReactiveProperty ".Value" in XAML.</p>
+</blockquote>
+<h2 id="how-to-create-a-reactiveproperty-instance">How to create a ReactiveProperty instance</h2>
+<p>The ReactiveProperty class can create from many methods.</p>
+<h3 id="create-from-the-constructor">Create from the constructor</h3>
+<p>The most simplest way is that using the constructor.</p>
+<pre><code class="cs">// create with the default value.
+var name = new ReactiveProperty&lt;string&gt;();
+Console.WriteLine(name.Value); // -&gt; empty output
+
+// create with the initial value.
+var name = new ReactiveProperty&lt;string&gt;(&quot;okazuki&quot;);
+Console.WriteLine(name.Value); // -&gt; okazuki
+</code></pre>
+
+<h3 id="create-from-the-iobservablet">Create from the IObservable&lt;T&gt;</h3>
+<p>This can create from the IObservable&lt;T&gt;.
+Just calls the <code>ToReactiveProperty</code> method.</p>
+<pre><code class="cs">IObservable&lt;long&gt; observableInstance = Observable.Interval(TimeSpan.FromSeconds(1));
+
+// Convert to ReactiveProperty from IObservable.
+ReactiveProperty&lt;long&gt; counter = observableInstance.ToReactiveProperty();
+</code></pre>
+
+<h4 id="create-from-the-reactiveproperty">Create from the ReactiveProperty</h4>
+<p>The ReactiveProperty implements the IObservable interface.
+It means that a ReactiveProperty can be created from ReactiveProperty.</p>
+<pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
+
+var formalName = name.Select(x =&gt; $&quot;Dear {x}&quot;)
+    .ToReactiveProperty();
+</code></pre>
+
+<p>All IObservable instances can become a ReactiveProperty. </p>
+<h2 id="validation">Validation</h2>
+<p>The ReactiveProperty class implements the INotifyDataErrorInfo interface.
+You can set the custom validation logic using the SetValidateNotifyError method.</p>
+<pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;()
+    .SetValidateNotifyError(x =&gt; string.IsNullOrWhiteSpace(x) ? &quot;Error message&quot; : null);
+</code></pre>
+
+<p>In the valid value case, the validation logic should return null.
+In the invalid value case, the logic should return a error message.</p>
+<h3 id="validation-with-the-systemcomponentsdataannotations">Validation with the System.Components.DataAnnotations</h3>
+<p>This class can integrate with the DataAnnotations.
+You can set the validation attribute using the SetValidateAttribute method.</p>
+<pre><code class="cs">class ViewModel
+{
+    // Set validation attributes
+    [Required(ErrorMessage = &quot;The name is required.&quot;)]
+    [StringLength(100, ErrorMessage = &quot;The name length should be lower than 30.&quot;)]
+    public ReactiveProperty&lt;string&gt; Name { get; }
+
+    public ViewModel()
+    {
+        Name = new ReactiveProperty&lt;string&gt;()
+            // Set validation attributes into the ReactiveProperty.
+            .SetValidateAttribute(() =&gt; Name);
+    }
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../getting-started/uwp/" class="btn btn-neutral float-right" title="Uwp">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="ReactiveProperty documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../getting-started/uwp/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

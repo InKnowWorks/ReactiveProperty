@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>WPF - ReactiveProperty documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "WPF";
+    var mkdocs_page_input_path = "getting-started\\wpf.md";
+    var mkdocs_page_url = "/getting-started/wpf/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ReactiveProperty documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">ReactiveProperty documentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../features/ReactivePropertyClass/">ReactiveProperty class</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../uwp/">UWP</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">WPF</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#wpf">WPF</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#create-a-project">Create a project</a></li>
+        
+            <li><a class="toctree-l4" href="#edit-codes">Edit codes</a></li>
+        
+            <li><a class="toctree-l4" href="#launch-the-application">Launch the application.</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../xamarin-forms/">Xamarin forms</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ReactiveProperty documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>WPF</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="wpf">WPF</h1>
+<h2 id="create-a-project">Create a project</h2>
+<ul>
+<li>Create a WPF App (.NET Framework) project.</li>
+<li>Install the ReactiveProperty from NuGet.</li>
+</ul>
+<h2 id="edit-codes">Edit codes</h2>
+<ul>
+<li>Create a MainWindowViewModel.cs file.</li>
+<li>Edit files like following.</li>
+</ul>
+<p>MainWindowViewModel.cs</p>
+<pre><code class="cs">using Reactive.Bindings;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Reactive.Linq;
+
+namespace WpfApp1
+{
+    class MainWindowViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ReactiveProperty&lt;string&gt; Input { get; }
+        public ReadOnlyReactiveProperty&lt;string&gt; Output { get; }
+
+        public MainWindowViewModel()
+        {
+            Input = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
+            Output = Input
+                .Delay(TimeSpan.FromSeconds(1))
+                .Select(x =&gt; x.ToUpper())
+                .ToReadOnlyReactiveProperty();
+        }
+    }
+}
+</code></pre>
+
+<p>MainWindow.xaml</p>
+<pre><code class="xml">&lt;Window x:Class=&quot;WpfApp1.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:WpfApp1&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot;
+        Height=&quot;350&quot;
+        Width=&quot;525&quot;&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:MainWindowViewModel /&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;StackPanel&gt;
+        &lt;Label Content=&quot;Input&quot; /&gt;
+        &lt;TextBox Text=&quot;{Binding Input.Value, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;Label Content=&quot;Output&quot; /&gt;
+        &lt;TextBlock Text=&quot;{Binding Output.Value}&quot;
+                   Margin=&quot;5&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+
+<h2 id="launch-the-application">Launch the application.</h2>
+<p>After launch the app, You can see the below window.
+The output value was displayed to upper case, after 1sec from the input.</p>
+<p><img alt="Launch the app" src="../images/launch-wpf-app.gif" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../xamarin-forms/" class="btn btn-neutral float-right" title="Xamarin forms">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../uwp/" class="btn btn-neutral" title="UWP"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../uwp/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../xamarin-forms/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>
