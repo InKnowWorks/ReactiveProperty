@@ -8,7 +8,7 @@
   <meta name="description" content="None">
   
   <link rel="shortcut icon" href="./img/favicon.ico">
-  <title>ReactiveProperty documentation - ReactiveProperty documentation</title>
+  <title>What is ReactiveProperty - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="./css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "ReactiveProperty documentation";
+    var mkdocs_page_name = "What is ReactiveProperty";
     var mkdocs_page_input_path = "index.md";
     var mkdocs_page_url = "/";
   </script>
@@ -49,10 +49,10 @@
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href=".">ReactiveProperty documentation</a>
+    <a class="current" href=".">What is ReactiveProperty</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#reactiveproperty-documentation">ReactiveProperty documentation</a></li>
+    <li class="toctree-l2"><a href="#what-is-reactiveproperty">What is ReactiveProperty</a></li>
     
 
     </ul>
@@ -64,11 +64,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="features/ReactiveCommandClass/">ReactiveCommandClass</a>
+    <a class="" href="features/Commanding/">Commanding</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="features/ReactivePropertyClass/">ReactivePropertyClass</a>
+    <a class="" href="features/ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="features/Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
                 </li>
     </ul>
 	    </li>
@@ -79,15 +83,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="getting-started/uwp/">Uwp</a>
+    <a class="" href="getting-started/Universal-Windows-Platform/">Universal Windows Platform</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="getting-started/wpf/">Wpf</a>
+    <a class="" href="getting-started/Windows-Presentation-Foundation/">Windows Presentation Foundation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="getting-started/xamarin-forms/">Xamarin forms</a>
+    <a class="" href="getting-started/Xamarin-Forms/">Xamarin Forms</a>
                 </li>
     </ul>
 	    </li>
@@ -114,7 +118,7 @@
     
       
     
-    <li>ReactiveProperty documentation</li>
+    <li>What is ReactiveProperty</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -124,10 +128,10 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="reactiveproperty-documentation">ReactiveProperty documentation</h1>
+                <h1 id="what-is-reactiveproperty">What is ReactiveProperty</h1>
 <p>ReactiveProperty provides MVVM and asynchronous support features under Reactive Extensions. Target framework is .NET 4.6, UWP, Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms and .NET Standard 1.3.</p>
 <p><img alt="Summary" src="./images/rpsummary.png" /></p>
-<p>Concept of ReactiveProperty is <code>Fun the programing.</code>
+<p>Concept of ReactiveProperty is <code>Fun programing.</code>
 You can write MVVM pattern program using ReactiveProperty very fun.</p>
 <p><img alt="UWP" src="./images/launch-uwp-app.gif" /></p>
 <p>Following code is tow way binding between ReactiveProperty and plane object property.</p>
@@ -158,7 +162,7 @@ class ViewModel
 }
 </code></pre>
 
-<p>ReactiveProperty is implemented the IObservable&lt;T&gt;. Yes! You can use the LINQ.</p>
+<p>ReactiveProperty is implemented the IObservable&lt;T&gt;. Yes! You can use LINQ.</p>
 <pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;();
 name.Where(x =&gt; x.StartsWith(&quot;_&quot;)) // filter
     .Select(x =&gt; x.ToUpper()) // convert
@@ -182,8 +186,8 @@ name.Where(x =&gt; x.StartsWith(&quot;_&quot;)) // filter
 }
 </code></pre>
 
-<p>I think that this method chain is very cool.</p>
-<p>And we provide the ReactiveCommand class what implements ICommand and IObservable&lt;T&gt; interface. ReactiveCommand can create from IObservable&lt;bool&gt;</p>
+<p>This method chain is very cool.</p>
+<p>And we provide ReactiveCommand class what implements ICommand and IObservable&lt;T&gt; interfaces. ReactiveCommand can create from an IObservable&lt;bool&gt;</p>
 <pre><code class="cs">var command = Observable.Interval(TimeSpan.FromSecond(1))
     .Select(x =&gt; x % 2 == 0) // convert to IO&lt;bool&gt;
     .ToReactiveCommand();
@@ -195,12 +199,14 @@ command.Subscribe(_ =&gt;
 
 <p>You can start the ReactiveProperty from following links.</p>
 <ul>
-<li>Getting started<ul>
-<li><a href="getting-started/wpf/">WPF</a></li>
-<li><a href="getting-started/uwp/">UWP</a></li>
-<li><a href="getting-started/xamarin-forms/">Xamarin.Forms</a></li>
+<li><a href="getting-started/Windows-Presentation-Foundation/">Windows Presentation Foundation</a></li>
+<li><a href="getting-started/Universal-Windows-Platform/">Universal Windows Platform</a></li>
+<li><a href="getting-started/Xamarin-Forms/">Xamarin.Forms</a></li>
 </ul>
-</li>
+<p>And learn to core features at following links.</p>
+<ul>
+<li><a href="features/ReactiveProperty/">ReactiveProperty</a></li>
+<li><a href="features/Commanding/">Commanding</a></li>
 </ul>
               
             </div>
@@ -209,7 +215,7 @@ command.Subscribe(_ =&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="features/ReactiveCommandClass/" class="btn btn-neutral float-right" title="ReactiveCommandClass">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="features/Commanding/" class="btn btn-neutral float-right" title="Commanding">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -237,7 +243,7 @@ command.Subscribe(_ =&gt;
       
       
       
-        <span style="margin-left: 15px"><a href="features/ReactiveCommandClass/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="features/Commanding/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -251,5 +257,5 @@ command.Subscribe(_ =&gt;
 
 <!--
 MkDocs version : 0.17.2
-Build Date UTC : 2018-01-07 13:00:15
+Build Date UTC : 2018-01-07 15:57:16
 -->

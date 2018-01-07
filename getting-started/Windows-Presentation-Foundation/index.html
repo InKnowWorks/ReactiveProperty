@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>UWP - ReactiveProperty documentation</title>
+  <title>Windows Presentation Foundation - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "UWP";
-    var mkdocs_page_input_path = "getting-started\\uwp.md";
-    var mkdocs_page_url = "/getting-started/uwp/";
+    var mkdocs_page_name = "Windows Presentation Foundation";
+    var mkdocs_page_input_path = "getting-started\\Windows-Presentation-Foundation.md";
+    var mkdocs_page_url = "/getting-started/Windows-Presentation-Foundation/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -49,7 +49,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../..">ReactiveProperty documentation</a>
+    <a class="" href="../..">What is ReactiveProperty</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -58,11 +58,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../features/ReactiveCommandClass/">ReactiveCommand class</a>
+    <a class="" href="../../features/Commanding/">Commanding</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/ReactivePropertyClass/">ReactiveProperty class</a>
+    <a class="" href="../../features/ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../features/Work-together-with-plane-model-layer-objects/">Work with plane model layer objects</a>
                 </li>
     </ul>
 	    </li>
@@ -71,12 +75,16 @@
 		
     <span class="caption-text">Getting started</span>
     <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Universal-Windows-Platform/">Universal Windows Platform</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">UWP</a>
+    <a class="current" href="./">Windows Presentation Foundation</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#uwp">UWP</a></li>
+    <li class="toctree-l3"><a href="#windows-presentation-foundation">Windows Presentation Foundation</a></li>
     
         <ul>
         
@@ -84,7 +92,7 @@
         
             <li><a class="toctree-l4" href="#edit-codes">Edit codes</a></li>
         
-            <li><a class="toctree-l4" href="#launch-the-application">Launch the application</a></li>
+            <li><a class="toctree-l4" href="#launch-the-application">Launch the application.</a></li>
         
         </ul>
     
@@ -93,11 +101,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../wpf/">Wpf</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../xamarin-forms/">Xamarin forms</a>
+    <a class="" href="../Xamarin-Forms/">Xamarin Forms</a>
                 </li>
     </ul>
 	    </li>
@@ -128,7 +132,7 @@
         
       
     
-    <li>UWP</li>
+    <li>Windows Presentation Foundation</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -138,40 +142,34 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="uwp">UWP</h1>
+                <h1 id="windows-presentation-foundation">Windows Presentation Foundation</h1>
 <h2 id="create-a-project">Create a project</h2>
 <ul>
-<li>
-<p>Create a Blank App (Universal Windows) project.</p>
-<ul>
-<li>Set a <code>Target version</code> item to Windows 10 Fall Creators Update (1.0.: Build 16299) and <code>Minimum version</code> item to the same.</li>
-</ul>
-<p><img alt="Target version" src="../images/uwp-target-version.png" /></p>
-<p>The ReactiveProperty target the .NET Standard 1.3. You can use this library with the another version UWP. My recomended version is after the Createors Update. After this version can use compile time binding.</p>
-</li>
-<li>
-<p>Install the ReactiveProperty package from NuGet.</p>
-</li>
+<li>Create a WPF App (.NET Framework) project.</li>
+<li>Install the ReactiveProperty from NuGet.</li>
 </ul>
 <h2 id="edit-codes">Edit codes</h2>
 <ul>
-<li>Create a MainPageViewModel.cs file.</li>
+<li>Create a MainWindowViewModel.cs file.</li>
 <li>Edit files like following.</li>
 </ul>
-<p>MainPageViewModel.cs</p>
+<p>MainWindowViewModel.cs</p>
 <pre><code class="cs">using Reactive.Bindings;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace GettingStartedUWP
+namespace WpfApp1
 {
-    public class MainPageViewModel
+    class MainWindowViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ReactiveProperty&lt;string&gt; Input { get; }
         public ReadOnlyReactiveProperty&lt;string&gt; Output { get; }
 
-        public MainPageViewModel()
+        public MainWindowViewModel()
         {
             Input = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
             Output = Input
@@ -183,54 +181,35 @@ namespace GettingStartedUWP
 }
 </code></pre>
 
-<p>MainPage.xaml.cs</p>
-<pre><code class="cs">using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&amp;clcid=0x409
-
-namespace GettingStartedUWP
-{
-    /// &lt;summary&gt;
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// &lt;/summary&gt;
-    public sealed partial class MainPage : Page
-    {
-        private MainPageViewModel ViewModel { get; } = new MainPageViewModel();
-        public MainPage()
-        {
-            this.InitializeComponent();
-        }
-    }
-}
-</code></pre>
-
-<p>MainPage.xaml</p>
-<pre><code class="xml">&lt;Page x:Class=&quot;GettingStartedUWP.MainPage&quot;
-    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
-    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-    xmlns:local=&quot;using:GettingStartedUWP&quot;
-    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
-    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
-    mc:Ignorable=&quot;d&quot;&gt;
-
-    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
-        &lt;TextBlock Text=&quot;Input&quot;
-                Style=&quot;{StaticResource CaptionTextBlockStyle}&quot; /&gt;
-        &lt;TextBox Text=&quot;{x:Bind ViewModel.Input.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
-                Margin=&quot;5&quot; /&gt;
-        &lt;TextBlock Text=&quot;Output&quot;
-                Style=&quot;{StaticResource CaptionTextBlockStyle}&quot; /&gt;
-        &lt;TextBlock Text=&quot;{x:Bind ViewModel.Output.Value, Mode=OneWay}&quot;
-                Style=&quot;{StaticResource BodyTextBlockStyle}&quot;
-                Margin=&quot;5&quot; /&gt;
+<p>MainWindow.xaml</p>
+<pre><code class="xml">&lt;Window x:Class=&quot;WpfApp1.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:WpfApp1&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot;
+        Height=&quot;350&quot;
+        Width=&quot;525&quot;&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:MainWindowViewModel /&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;StackPanel&gt;
+        &lt;Label Content=&quot;Input&quot; /&gt;
+        &lt;TextBox Text=&quot;{Binding Input.Value, UpdateSourceTrigger=PropertyChanged}&quot;
+                 Margin=&quot;5&quot; /&gt;
+        &lt;Label Content=&quot;Output&quot; /&gt;
+        &lt;TextBlock Text=&quot;{Binding Output.Value}&quot;
+                   Margin=&quot;5&quot; /&gt;
     &lt;/StackPanel&gt;
-&lt;/Page&gt;
+&lt;/Window&gt;
 </code></pre>
 
-<h2 id="launch-the-application">Launch the application</h2>
+<h2 id="launch-the-application">Launch the application.</h2>
 <p>After launch the app, You can see the below window.
 The output value was displayed to upper case, after 1sec from the input.</p>
-<p><img alt="Launch the app" src="../images/launch-uwp-app.gif" /></p>
+<p><img alt="Launch the app" src="../images/launch-wpf-app.gif" /></p>
               
             </div>
           </div>
@@ -238,10 +217,10 @@ The output value was displayed to upper case, after 1sec from the input.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../wpf/" class="btn btn-neutral float-right" title="Wpf">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Xamarin-Forms/" class="btn btn-neutral float-right" title="Xamarin Forms">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../features/ReactivePropertyClass/" class="btn btn-neutral" title="ReactiveProperty class"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Universal-Windows-Platform/" class="btn btn-neutral" title="Universal Windows Platform"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -267,10 +246,10 @@ The output value was displayed to upper case, after 1sec from the input.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../features/ReactivePropertyClass/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Universal-Windows-Platform/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../wpf/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Xamarin-Forms/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

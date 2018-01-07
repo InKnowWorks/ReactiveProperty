@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>ReactiveCommand class - ReactiveProperty documentation</title>
+  <title>Commanding - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "ReactiveCommand class";
-    var mkdocs_page_input_path = "features\\ReactiveCommandClass.md";
-    var mkdocs_page_url = "/features/ReactiveCommandClass/";
+    var mkdocs_page_name = "Commanding";
+    var mkdocs_page_input_path = "features\\Commanding.md";
+    var mkdocs_page_url = "/features/Commanding/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -49,7 +49,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../..">ReactiveProperty documentation</a>
+    <a class="" href="../..">What is ReactiveProperty</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -58,24 +58,26 @@
     <ul class="subnav">
                 <li class=" current">
                     
-    <a class="current" href="./">ReactiveCommand class</a>
+    <a class="current" href="./">Commanding</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#reactivecommand-class">ReactiveCommand class</a></li>
+    <li class="toctree-l3"><a href="#commanding">Commanding</a></li>
     
         <ul>
         
             <li><a class="toctree-l4" href="#basic-usage">Basic usage</a></li>
         
-            <li><a class="toctree-l4" href="#using-in-the-viewmodel-class">Using in the ViewModel class</a></li>
+            <li><a class="toctree-l4" href="#using-in-viewmodel-class">Using in ViewModel class</a></li>
         
             <li><a class="toctree-l4" href="#work-with-linq">Work with LINQ</a></li>
         
             <li><a class="toctree-l4" href="#create-from-iobservablebool">Create from IObservable&lt;bool&gt;</a></li>
         
-            <li><a class="toctree-l4" href="#create-a-command-and-subscribe-in-one-statement">Create a command and subscribe, in one statement</a></li>
+            <li><a class="toctree-l4" href="#create-command-and-subscribe-in-one-statement">Create command and subscribe, in one statement</a></li>
         
             <li><a class="toctree-l4" href="#unsubscribe-actions">Unsubscribe actions</a></li>
+        
+            <li><a class="toctree-l4" href="#async-version-reactivecommand">Async version ReactiveCommand</a></li>
         
         </ul>
     
@@ -84,7 +86,11 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../ReactivePropertyClass/">ReactivePropertyClass</a>
+    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
                 </li>
     </ul>
 	    </li>
@@ -95,15 +101,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../getting-started/uwp/">Uwp</a>
+    <a class="" href="../../getting-started/Universal-Windows-Platform/">Universal Windows Platform</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../getting-started/wpf/">Wpf</a>
+    <a class="" href="../../getting-started/Windows-Presentation-Foundation/">Windows Presentation Foundation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../getting-started/xamarin-forms/">Xamarin forms</a>
+    <a class="" href="../../getting-started/Xamarin-Forms/">Xamarin Forms</a>
                 </li>
     </ul>
 	    </li>
@@ -134,7 +140,7 @@
         
       
     
-    <li>ReactiveCommand class</li>
+    <li>Commanding</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -144,14 +150,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="reactivecommand-class">ReactiveCommand class</h1>
-<p>This class implements following two interfaces.
+                <h1 id="commanding">Commanding</h1>
+<p>ReactiveCommand class implements following two interfaces.
 - ICommand interface
 - IObservable&lt;T&gt;</p>
 <h2 id="basic-usage">Basic usage</h2>
-<p>This class can be created using the ToReactiveCommand extension method from IObservable&lt;bool&gt; instance.
-When the IObservable&lt;bool&gt; instance updated, the CanExecuteChanged event raise.</p>
-<p>If you want an always executable command, then you can create ReactiveCommand instance using the default constructor.</p>
+<p>This class can be created using ToReactiveCommand extension method from IObservable&lt;bool&gt; instance.
+When IObservable&lt;bool&gt; instance updated, CanExecuteChanged event raise.</p>
+<p>If you always want executable command, then you can create ReactiveCommand instance using the default constructor.</p>
 <pre><code class="cs">IObservable&lt;bool&gt; canExecuteSource = ...;
 
 ReactiveCommand someCommand = canExecuteSource.ToReactiveCommand(); // non command parameter version.
@@ -168,16 +174,16 @@ ReactiveCommand someCommand = canExecuteSource.ToReactiveCommand(false);
 ReactiveCommand&lt;string&gt; hasCommandParameterCommand = canExecuteSource.ToReactiveCommand&lt;string&gt;(false);
 </code></pre>
 
-<p>When the Execute method is called, ReactiveCommand call an OnNext callback.
-You can register the execute logic using the Subscribe method.</p>
+<p>When Execute method is called, ReactiveCommand call the OnNext callback.
+You can register execute logic using the Subscribe method.</p>
 <pre><code class="cs">ReactiveCommand someCommand = new ReactiveCommand();
 someCommand.Subscribe(_ =&gt; { ... some logic ... }); // set an OnNext callback
 
 someCommand.Execute(); // OnNext callback is called.
 </code></pre>
 
-<h2 id="using-in-the-viewmodel-class">Using in the ViewModel class</h2>
-<p>The first example, just use a ReactiveCommand class.</p>
+<h2 id="using-in-viewmodel-class">Using in ViewModel class</h2>
+<p>The first example, just use ReactiveCommand class.</p>
 <pre><code class="cs">public class ViewModel
 {
     public ReactiveCommand UpdateTimeCommand { get; }
@@ -193,7 +199,7 @@ someCommand.Execute(); // OnNext callback is called.
 }
 </code></pre>
 
-<p>The UWP platform example.</p>
+<p>UWP platform example.</p>
 <pre><code class="cs">public sealed partial class MainPage : Page
 {
     private ViewModel ViewModel { get; } = new ViewModel();
@@ -224,14 +230,14 @@ someCommand.Execute(); // OnNext callback is called.
 
 <p><img alt="First example" src="../images/reactivecommand-firstexample.gif" /></p>
 <h2 id="work-with-linq">Work with LINQ</h2>
-<p>The ReactiveCommand class implements IObservable&lt;T&gt; interface. 
-Can use LINQ methods, and the ReactiveProperty&lt;T&gt; class can create from an IObservable&lt;T&gt;.
-Yes, can change the previous example code to the below.</p>
+<p>ReactiveCommand class implements IObservable&lt;T&gt; interface. 
+Can use LINQ methods, and ReactiveProperty&lt;T&gt; class can create from IObservable&lt;T&gt;.
+Yes, can change the previous example code to below.</p>
 <pre><code class="cs">public class ViewModel
 {
     public ReactiveCommand UpdateTimeCommand { get; }
 
-    // Don't need that set the Value property. So can change to the ReadOnlyReactiveProperty.
+    // Don't need that set Value property. So can change to ReadOnlyReactiveProperty.
     public ReadOnlyReactiveProperty&lt;string&gt; Time { get; }
 
     public ViewModel()
@@ -268,9 +274,9 @@ Yes, can change the previous example code to the below.</p>
 </code></pre>
 
 <p><img alt="Disable 5 secs" src="../images/reactivecommand-disable5secs.gif" /></p>
-<h2 id="create-a-command-and-subscribe-in-one-statement">Create a command and subscribe, in one statement</h2>
-<p>In the case that doesn't use LINQ methods, can create a command and subscribe, in one statement.
-The WithSubscribe extension method subscribe and return the ReactiveCommand instance, see below.</p>
+<h2 id="create-command-and-subscribe-in-one-statement">Create command and subscribe, in one statement</h2>
+<p>In the case that doesn't use LINQ methods, can create command and subscribe, in one statement.
+WithSubscribe extension method subscribes and return ReactiveCommand instance, see below.</p>
 <pre><code class="cs">public class ViewModel
 {
     public ReactiveCommand UpdateTimeCommand { get; }
@@ -291,7 +297,7 @@ The WithSubscribe extension method subscribe and return the ReactiveCommand inst
 }
 </code></pre>
 
-<p>This is a just shortcut the below code.</p>
+<p>WithSubscribe method is a just shortcut below code.</p>
 <pre><code class="cs">// No use the WithSubscribe
 var command = new ReactiveCommand();
 command.Subscribe(_ =&gt; { ... some actions ... });
@@ -301,9 +307,9 @@ var command = new ReactiveCommand()
     .WithSubscribe(() =&gt; { ... some actions ... });
 </code></pre>
 
-<p>If use LINQ methods, then separate statements create an instance and subscribe an onNext.</p>
+<p>If use LINQ methods, then separate statements create an instance and subscribe.</p>
 <h2 id="unsubscribe-actions">Unsubscribe actions</h2>
-<p>If need that unsubscribes actions, then use the Dispose method of IDisposable which Subscribe method returned.</p>
+<p>If need that unsubscribes actions, then use Dispose method of IDisposable which Subscribe method returned.</p>
 <pre><code class="cs">var command = new ReactiveCommand();
 var subscription1 = command.Subscribe(_ =&gt; { ... some actions ... });
 var subscription2 = command.Subscribe(_ =&gt; { ... some actions ... });
@@ -316,16 +322,16 @@ subscription2.Dispose();
 command.Dispose();
 </code></pre>
 
-<p>The WithSubscribe extension method have override methods which have IDisposable argument.</p>
+<p>WithSubscribe extension method has override methods which have an IDisposable argument.</p>
 <pre><code class="cs">IDisposable subscription = null;
-var command = new ReactiveCommand().WithSubscribe(() =&gt; { ... some action ... }, out subscription);
+var command = new ReactiveCommand().WithSubscribe(() =&gt; { ... some actions ... }, out subscription);
 
 // Unsubscribe
 subscription.Dispose();
 </code></pre>
 
-<p>And has an override of Action<IDisposable> argument.
-It is used together with the CompositeDisposable class.</p>
+<p>And has another override of Action<IDisposable> argument.
+It is used together with CompositeDisposable class.</p>
 <pre><code class="cs">var subscriptions = new CompositeDisposable();
 var command = new ReactiveCommand()
     .WithSubscribe(() =&gt; { ... some actions ... }, subscriptions.Add)
@@ -335,7 +341,131 @@ var command = new ReactiveCommand()
 subscription.Dispose();
 </code></pre>
 
-<p>In other instance's events subscribe, then you should call the Dispose method of the ReactiveCommand class when the end of ViewModel lifecycle.</p>
+<p>In other instance's events subscribe, then you should call the Dispose method of ReactiveCommand class when the end of ViewModel lifecycle.</p>
+<h2 id="async-version-reactivecommand">Async version ReactiveCommand</h2>
+<p>AsyncReactiveCommand class is async version ReactiveCommand class.
+This class can subscribe async methods, and when executing async method then CanExecute method returns false.
+So, this class can't re-execute during the async method is proceed.</p>
+<h3 id="basic-usage_1">Basic usage</h3>
+<p>Neary the same as a ReactiveCommand class. 
+Just difference is that accept async method in Subscribe method argument, and don't implement the IObservable&lt;T&gt; interface.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public AsyncReactiveCommand HeavyCommand { get; }
+
+    public ReactiveProperty&lt;string&gt; Message { get; } = new ReactiveProperty&lt;string&gt;();
+
+    public ViewModel()
+    {
+        HeavyCommand = new AsyncReactiveCommand()
+            .WithSubscribe(async () =&gt;
+            {
+                Message.Value = &quot;Heavy command started.&quot;;
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                Message.Value = &quot;Heavy command finished.&quot;;
+            });
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Button Content=&quot;Heavy command&quot;
+                Command=&quot;{x:Bind ViewModel.HeavyCommand}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;{x:Bind ViewModel.Message.Value, Mode=OneWay}&quot;
+                   Margin=&quot;5&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="HeavyCommand" src="../images/asyncreactivecommand-heavyprocess.gif" /></p>
+<p>Of cause, AsyncReactiveCommand is created from IObservable&lt;bool&gt;.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public AsyncReactiveCommand HeavyCommand { get; }
+
+    public ReactiveProperty&lt;string&gt; Message { get; } = new ReactiveProperty&lt;string&gt;();
+
+    public ViewModel()
+    {
+        HeavyCommand = Observable.Interval(TimeSpan.FromSeconds(1))
+            .Select(x =&gt; x % 2 == 0)
+            .ToAsyncReactiveCommand()
+            .WithSubscribe(async () =&gt;
+            {
+                Message.Value = &quot;Heavy command started.&quot;;
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                Message.Value = &quot;Heavy command finished.&quot;;
+            });
+    }
+}
+</code></pre>
+
+<p><img alt="From IObservable&lt;bool&gt;" src="../images/asyncreactivecommand-from-iobool.gif" /></p>
+<p>And AsyncReactiveCommand implements the IDisposable interface.
+You should call the Dispose method when the another instance's event subscribe.</p>
+<h3 id="share-canexecute-state">Share CanExecute state</h3>
+<p>Sometimes want only one of an async method is executing in a page.
+In this case, can share CanExecute state between AsyncReactiveCommand instances.
+When created from a same ReactiveProperty&lt;bool&gt; instance, then synchronize CanExecute state.</p>
+<pre><code class="cs">public class ViewModel
+{
+    private ReactiveProperty&lt;bool&gt; HeavyCommandCanExecuteState { get; } = new ReactiveProperty&lt;bool&gt;(true);
+    public AsyncReactiveCommand HeavyCommand1 { get; }
+    public AsyncReactiveCommand HeavyCommand2 { get; }
+
+    public ReactiveProperty&lt;string&gt; Message { get; } = new ReactiveProperty&lt;string&gt;();
+
+    public ViewModel()
+    {
+        HeavyCommand1 = HeavyCommandCanExecuteState
+            .ToAsyncReactiveCommand()
+            .WithSubscribe(async () =&gt;
+            {
+                Message.Value = &quot;Heavy command 1 started.&quot;;
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                Message.Value = &quot;Heavy command 1 finished.&quot;;
+            });
+        HeavyCommand2 = HeavyCommandCanExecuteState
+            .ToAsyncReactiveCommand()
+            .WithSubscribe(async () =&gt;
+            {
+                Message.Value = &quot;Heavy command 2 started.&quot;;
+                await Task.Delay(TimeSpan.FromSeconds(5));
+                Message.Value = &quot;Heavy command 2 finished.&quot;;
+            });
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;StackPanel Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Button Content=&quot;Heavy command 1&quot;
+                Command=&quot;{x:Bind ViewModel.HeavyCommand1}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;Button Content=&quot;Heavy command 2&quot;
+                Command=&quot;{x:Bind ViewModel.HeavyCommand2}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;{x:Bind ViewModel.Message.Value, Mode=OneWay}&quot;
+                   Margin=&quot;5&quot; /&gt;
+    &lt;/StackPanel&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="Share state" src="../images/asyncreactivecommand-share-state.gif" /></p>
               
             </div>
           </div>
@@ -343,10 +473,10 @@ subscription.Dispose();
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../ReactivePropertyClass/" class="btn btn-neutral float-right" title="ReactivePropertyClass">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ReactiveProperty/" class="btn btn-neutral float-right" title="ReactiveProperty">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="ReactiveProperty documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral" title="What is ReactiveProperty"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -375,7 +505,7 @@ subscription.Dispose();
         <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../ReactivePropertyClass/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../ReactiveProperty/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

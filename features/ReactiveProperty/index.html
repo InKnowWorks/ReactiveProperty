@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>ReactiveProperty class - ReactiveProperty documentation</title>
+  <title>ReactiveProperty - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "ReactiveProperty class";
-    var mkdocs_page_input_path = "features\\ReactivePropertyClass.md";
-    var mkdocs_page_url = "/features/ReactivePropertyClass/";
+    var mkdocs_page_name = "ReactiveProperty";
+    var mkdocs_page_input_path = "features\\ReactiveProperty.md";
+    var mkdocs_page_url = "/features/ReactiveProperty/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -49,7 +49,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../..">ReactiveProperty documentation</a>
+    <a class="" href="../..">What is ReactiveProperty</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -58,18 +58,18 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../ReactiveCommandClass/">ReactiveCommand class</a>
+    <a class="" href="../Commanding/">Commanding</a>
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">ReactiveProperty class</a>
+    <a class="current" href="./">ReactiveProperty</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#reactiveproperty-class">ReactiveProperty class</a></li>
+    <li class="toctree-l3"><a href="#reactiveproperty">ReactiveProperty</a></li>
     
         <ul>
         
-            <li><a class="toctree-l4" href="#use-with-the-xaml-platform">Use with the XAML platform</a></li>
+            <li><a class="toctree-l4" href="#use-with-xaml-platform">Use with XAML platform</a></li>
         
             <li><a class="toctree-l4" href="#how-to-create-a-reactiveproperty-instance">How to create a ReactiveProperty instance</a></li>
         
@@ -86,6 +86,10 @@
 
     </ul>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+                </li>
     </ul>
 	    </li>
           
@@ -95,15 +99,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../getting-started/uwp/">Uwp</a>
+    <a class="" href="../../getting-started/Universal-Windows-Platform/">Universal Windows Platform</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../getting-started/wpf/">Wpf</a>
+    <a class="" href="../../getting-started/Windows-Presentation-Foundation/">Windows Presentation Foundation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../getting-started/xamarin-forms/">Xamarin forms</a>
+    <a class="" href="../../getting-started/Xamarin-Forms/">Xamarin Forms</a>
                 </li>
     </ul>
 	    </li>
@@ -134,7 +138,7 @@
         
       
     
-    <li>ReactiveProperty class</li>
+    <li>ReactiveProperty</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -144,7 +148,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="reactiveproperty-class">ReactiveProperty class</h1>
+                <h1 id="reactiveproperty">ReactiveProperty</h1>
 <p>ReactiveProperty is core class of this library.
 This has following features.</p>
 <ul>
@@ -193,11 +197,11 @@ PropertyChanged: Value
 
 <p>What's deferent between PropertyChanged and onNext callback?
 The onNext is called when subscribe. The PropertyChanged isn't called when added the event handler. And the onNext callback's argument is the property value, the PropertyChanged argument don't have the property value.</p>
-<p>The PropertyChanged event was provided for the data binding. In the normal case, you should use the Reactive Extensions methods.</p>
-<h2 id="use-with-the-xaml-platform">Use with the XAML platform</h2>
-<p>The ReactiveProperty class is designed for the XAML platform which is like WPF, UWP, and Xamarin.Forms.
-This class can be used the ViewModel layer. </p>
-<p>In the case that don't use the ReactiveProperty, the ViewModel class wrote the below. </p>
+<p>The PropertyChanged event was provided for data binding. In the normal case, you should use Reactive Extensions methods.</p>
+<h2 id="use-with-xaml-platform">Use with XAML platform</h2>
+<p>The ReactiveProperty class is designed for XAML platform which is like WPF, UWP, and Xamarin.Forms.
+This class can be used a ViewModel layer. </p>
+<p>In the case that don't use the ReactiveProperty, a ViewModel class wrote below. </p>
 <pre><code class="cs">public class MainPageViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
@@ -231,7 +235,7 @@ This class can be used the ViewModel layer. </p>
 &lt;Entry Text=&quot;{Binding Name}&quot; /&gt;
 </code></pre>
 
-<p>In the case that uses the ReactiveProperty, The ViewModel code becomes very simple!</p>
+<p>In the case that uses the ReactiveProperty, a ViewModel code becomes very simple!</p>
 <pre><code class="cs">// The INotifyPropertyChanged interface must implement when using the WPF.
 // Because, if you don't implement this, then memory leak occurred.
 public class MainPageViewModel
@@ -242,7 +246,7 @@ public class MainPageViewModel
 }
 </code></pre>
 
-<p>When binding in the XAML code, you must add the <code>.Value</code> in the binding path.
+<p>When binding in the XAML code, you must add the <code>.Value</code> in binding path.
 This is an only limitation of this library.</p>
 <pre><code class="xml">&lt;!-- In the WPF --&gt;
 &lt;TextBox Text=&quot;{Binding Name.Value}&quot; /&gt;
@@ -265,7 +269,7 @@ Highlight the missing of ReactiveProperty ".Value" in XAML.</p>
 <h2 id="how-to-create-a-reactiveproperty-instance">How to create a ReactiveProperty instance</h2>
 <p>The ReactiveProperty class can create from many methods.</p>
 <h3 id="create-from-the-constructor">Create from the constructor</h3>
-<p>The most simplest way is that using the constructor.</p>
+<p>The simplest way is that using constructor.</p>
 <pre><code class="cs">// create with the default value.
 var name = new ReactiveProperty&lt;string&gt;();
 Console.WriteLine(name.Value); // -&gt; empty output
@@ -275,38 +279,38 @@ var name = new ReactiveProperty&lt;string&gt;(&quot;okazuki&quot;);
 Console.WriteLine(name.Value); // -&gt; okazuki
 </code></pre>
 
-<h3 id="create-from-the-iobservablet">Create from the IObservable&lt;T&gt;</h3>
-<p>This can create from the IObservable&lt;T&gt;.
-Just calls the <code>ToReactiveProperty</code> method.</p>
+<h3 id="create-from-iobservablet">Create from IObservable&lt;T&gt;</h3>
+<p>This can create from IObservable&lt;T&gt;.
+Just calls <code>ToReactiveProperty</code> method.</p>
 <pre><code class="cs">IObservable&lt;long&gt; observableInstance = Observable.Interval(TimeSpan.FromSeconds(1));
 
 // Convert to ReactiveProperty from IObservable.
 ReactiveProperty&lt;long&gt; counter = observableInstance.ToReactiveProperty();
 </code></pre>
 
-<h4 id="create-from-the-reactiveproperty">Create from the ReactiveProperty</h4>
-<p>The ReactiveProperty implements the IObservable interface.
-It means that a ReactiveProperty can be created from ReactiveProperty.</p>
+<h4 id="create-from-reactiveproperty">Create from ReactiveProperty</h4>
+<p>The ReactiveProperty implements IObservable interface.
+It means that ReactiveProperty can be created from ReactiveProperty.</p>
 <pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
 
 var formalName = name.Select(x =&gt; $&quot;Dear {x}&quot;)
     .ToReactiveProperty();
 </code></pre>
 
-<p>All IObservable instances can become a ReactiveProperty. </p>
+<p>All IObservable instances can become ReactiveProperty. </p>
 <h2 id="validation">Validation</h2>
-<p>The ReactiveProperty class implements the INotifyDataErrorInfo interface.</p>
+<p>The ReactiveProperty class implements INotifyDataErrorInfo interface.</p>
 <h3 id="set-custom-validation-logics">Set custom validation logics</h3>
-<p>You can set the custom validation logic using the SetValidateNotifyError method.</p>
+<p>You can set custom validation logic using the SetValidateNotifyError method.</p>
 <pre><code class="cs">var name = new ReactiveProperty&lt;string&gt;()
     .SetValidateNotifyError(x =&gt; string.IsNullOrWhiteSpace(x) ? &quot;Error message&quot; : null);
 </code></pre>
 
-<p>In the valid value case, the validation logic should return null.
-In the invalid value case, the logic should return a error message.</p>
+<p>In the correct value case, validation logic should return null.
+In invalid value case, logic should return an error message.</p>
 <h3 id="work-with-dataannotations">Work with DataAnnotations</h3>
 <p>This class can work together with the DataAnnotations.
-You can set the validation attribute using the SetValidateAttribute method.</p>
+You can set validation attribute using the SetValidateAttribute method.</p>
 <pre><code class="cs">class ViewModel
 {
     // Set validation attributes
@@ -323,11 +327,11 @@ You can set the validation attribute using the SetValidateAttribute method.</p>
 }
 </code></pre>
 
-<p>WPF is integrated the INotifyDataErrorInfo interface. See below.</p>
+<p>WPF is integrated INotifyDataErrorInfo interface. See below.</p>
 <p><img alt="WPF Validation" src="../images/wpf-validation.png" /></p>
 <h3 id="handling-validation-errors">Handling validation errors</h3>
-<p>Other platform can't display the error message from the INofityDataErrorInfo interface.
-The ReactiveProperty class have some properties for handling validation errors.</p>
+<p>Another platform can't display error messages from the INofityDataErrorInfo interface.
+ReactiveProperty class have some properties for handling validation errors.</p>
 <p>A first property is <code>ObserveErrorChanged</code>.
 This type is <code>IObservable&lt;IEnumerable&gt;</code>. You can convert to an error message from IEnumerable. See below.</p>
 <pre><code class="cs">class ViewModel
@@ -386,9 +390,9 @@ This type is <code>IObservable&lt;IEnumerable&gt;</code>. You can convert to an 
 </code></pre>
 
 <p><img alt="A validation error message" src="../images/validation-errormessage.png" /></p>
-<p>A next property is <code>ObserveHasErrors</code>. The <code>ObserveHasErrors</code> property type is <code>IObservable&lt;bool&gt;</code>.
+<p>Next property is <code>ObserveHasErrors</code>. <code>ObserveHasErrors</code> property type is <code>IObservable&lt;bool&gt;</code>.
 In popular input form case, combine <code>ObserveHasErrors</code> property values very useful.</p>
-<p>This sample program is that create a HasErros property that type is ReactiveProperty&lt;bool&gt; that combine two ReactiveProperty's ObserveHasErrors properties.</p>
+<p>This sample program is that create HasErros property that type is ReactiveProperty&lt;bool&gt; that combine two ReactiveProperty's ObserveHasErrors properties.</p>
 <pre><code class="cs">public class ViewModel
 {
     // Set validation attributes
@@ -450,7 +454,7 @@ In popular input form case, combine <code>ObserveHasErrors</code> property value
 
 <p><img alt="HasErrors" src="../images/haserrors-handling.png" /></p>
 <p><img alt="HasErrors2" src="../images/haserrors-handling2.png" /></p>
-<p>The last property is <code>HasErrors</code>. It is a just bool property.</p>
+<p>Last property is <code>HasErrors</code>. It is a just bool property.</p>
 <pre><code class="cs">public class ViewModel
 {
     // Set validation attributes
@@ -479,9 +483,9 @@ In popular input form case, combine <code>ObserveHasErrors</code> property value
 </code></pre>
 
 <h3 id="dont-need-initial-validation-error">Don't need initial validation error</h3>
-<p>In the default behavior, the ReactiveProperty report errors when the validation logic set.
-If you don't need the initial validation error, then you can skip the error.
-Just call the Skip method.</p>
+<p>In default behavior, ReactiveProperty report errors when validation logic set.
+If you don't need initial validation error, then you can skip the error.
+Just call Skip method.</p>
 <pre><code class="cs">class ViewModel
 {
     // Set validation attributes
@@ -506,39 +510,39 @@ Just call the Skip method.</p>
 </code></pre>
 
 <h2 id="the-mode-of-reactiveproperty">The mode of ReactiveProperty</h2>
-<p>The ReactiveProperty class call a OnNext callback when the Subscribe method called.</p>
+<p>ReactiveProperty class call OnNext callback when Subscribe method called.</p>
 <pre><code class="cs">var x = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;);
 x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; initial value
 </code></pre>
 
-<p>You could change this behavior when the ReactiveProperty instance create.
-The constructor and the ToReactiveProperty method have a mode argument.
+<p>You could change this behavior when ReactiveProperty instance create.
+Constructor and ToReactiveProperty method have mode argument.
 This can be set following values.</p>
 <ul>
 <li>ReactivePropertyMode.None<ul>
-<li>ReactiveProperty doesn't call an OnNext callback when the Subscribe method call. And call an OnNext callback if the same value set.</li>
+<li>ReactiveProperty doesn't call OnNext callback when Subscribe method call. And call OnNext callback if the same value set.</li>
 </ul>
 </li>
 <li>ReactivePropertyMode.DistinctUntilChanged<ul>
-<li>This doesn't call an OnNext callback if the same value set.</li>
+<li>This doesn't call OnNext callback if same value set.</li>
 </ul>
 </li>
 <li>ReactivePropertyMode.RaiseLatestValueOnSubscribe<ul>
-<li>This calls an OnNext callback when the Subscribe method call.</li>
+<li>This calls OnNext callback when Subscribe method call.</li>
 </ul>
 </li>
 </ul>
-<p>The default value is <code>ReactivePropertyMode.DistinctUntilChanged | ReactivePropertyMode.RaiseLatestValueOnSubscribe</code>.</p>
-<p>If you don't need this behavior then you can set the ReactivePropertyMode.None value.</p>
+<p>Default value is <code>ReactivePropertyMode.DistinctUntilChanged | ReactivePropertyMode.RaiseLatestValueOnSubscribe</code>.</p>
+<p>If you don't need this behavior, then you can set ReactivePropertyMode.None value.</p>
 <pre><code class="cs">var x = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;, mode: ReactivePropertyMode.None);
-x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; don't output the value
+x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; don't output value
 x.Value = &quot;initial value&quot;; // -&gt; initial value
 </code></pre>
 
 <h2 id="readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</h2>
-<p>If you never set the Value property, then you can use the ReadOnlyReactiveProperty class.
-This class can't set the property, and other behavior is same the ReactiveProperty class.
-The ReadOnlyReactiveProperty class is created from ToReadOnlyReactiveProperty extension method.</p>
+<p>If you never set Value property, then you can use ReadOnlyReactiveProperty class.
+This class can't set the property, and other behavior is same ReactiveProperty class.
+ReadOnlyReactiveProperty class is created from ToReadOnlyReactiveProperty extension method.</p>
 <p>See below.</p>
 <pre><code class="cs">public class ViewModel
 {
@@ -559,9 +563,9 @@ The ReadOnlyReactiveProperty class is created from ToReadOnlyReactiveProperty ex
 </code></pre>
 
 <h2 id="unsubscribe">Unsubscribe</h2>
-<p>The ReactiveProperty class implements the IDisposable interface.
-When the Dispose method called, the ReactiveProperty class release all subscription.
-In other instance's events subscribe, then you should call the Dispose method when the end of ViewModel lifecycle.</p>
+<p>ReactiveProperty class implements IDisposable interface.
+When Dispose method called, ReactiveProperty class releases all subscription.
+In other instance's events subscribe, then you should call Dispose method when the end of ViewModel lifecycle.</p>
 <pre><code class="cs">public class ViewModel : IDisposable
 {
     public ReadOnlyReactiveProperty&lt;string&gt; Time { get; }
@@ -587,10 +591,10 @@ In other instance's events subscribe, then you should call the Dispose method wh
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../getting-started/uwp/" class="btn btn-neutral float-right" title="Uwp">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Work-together-with-plane-model-layer-objects/" class="btn btn-neutral float-right" title="Work together with plane model layer objects">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../ReactiveCommandClass/" class="btn btn-neutral" title="ReactiveCommand class"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Commanding/" class="btn btn-neutral" title="Commanding"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -616,10 +620,10 @@ In other instance's events subscribe, then you should call the Dispose method wh
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../ReactiveCommandClass/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Commanding/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../getting-started/uwp/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Work-together-with-plane-model-layer-objects/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

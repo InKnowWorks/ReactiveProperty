@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,14 +12,20 @@
     
         
     <url>
-     <loc>/features/ReactiveCommandClass/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <loc>/features/Commanding/</loc>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/features/ReactivePropertyClass/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <loc>/features/ReactiveProperty/</loc>
+     <lastmod>2018-01-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/features/Work-together-with-plane-model-layer-objects/</loc>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -28,20 +34,20 @@
     
         
     <url>
-     <loc>/getting-started/uwp/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <loc>/getting-started/Universal-Windows-Platform/</loc>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/getting-started/wpf/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <loc>/getting-started/Windows-Presentation-Foundation/</loc>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/getting-started/xamarin-forms/</loc>
-     <lastmod>2018-01-07</lastmod>
+     <loc>/getting-started/Xamarin-Forms/</loc>
+     <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
