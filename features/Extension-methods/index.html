@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Extension methods - ReactiveProperty documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Extension methods";
+    var mkdocs_page_input_path = "features\\Extension-methods.md";
+    var mkdocs_page_url = "/features/Extension-methods/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ReactiveProperty documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/wpf/">Windows Presentation Foundation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/uwp/">Universal Windows Platform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/xf/">Xamarin.Forms</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Commanding/">Commanding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Collections/">Collections</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Notifiers/">Useful classes which implement IObservable</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Extension methods</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#addto">AddTo</a></li>
+    
+
+    <li class="toctree-l3"><a href="#catchignore">CatchIgnore</a></li>
+    
+
+    <li class="toctree-l3"><a href="#combinelatestsvaluesareallxxxx">CombineLatestsValuesAreAllXXXX</a></li>
+    
+
+    <li class="toctree-l3"><a href="#canexecutechangedasobservable">CanExecuteChangedAsObservable</a></li>
+    
+
+    <li class="toctree-l3"><a href="#inotifycollectionchanged-extension-methods">INotifyCollectionChanged extension methods</a></li>
+    
+
+    <li class="toctree-l3"><a href="#observablecollection-extension-methods">ObservableCollection extension methods</a></li>
+    
+
+    <li class="toctree-l3"><a href="#observe-propertychanged-events-of-observablecollections-items">Observe PropertyChanged events of ObservableCollection's items</a></li>
+    
+
+    <li class="toctree-l3"><a href="#inotifydataerrorinfo-extension-methods">INotifyDataErrorInfo extension methods</a></li>
+    
+
+    <li class="toctree-l3"><a href="#inverse">Inverse</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ReactiveProperty documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Features &raquo;</li>
+        
+      
+    
+    <li>Extension methods</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Reactive.Bindings.Extensions namespace provides useful extension methods.</p>
+<h2 id="addto">AddTo</h2>
+<p>This is a most usefulest extension method in this namespace.
+Collect to IDisposable instances in the method chain.</p>
+<p>In the case which doesn't use this, two statements between instance creation and adding an IDisposable instance.</p>
+<pre><code class="cs">// init
+var d = new CompositeDisposable();
+
+Name = model.ObserveProperty(x =&gt; x.Name)
+    .ToReadOnlyReactiveProperty();
+d.Add(Name);
+
+Age = model.ObserveProperty(x =&gt; x.Age)
+    .ToReadOnlyReactiveProperty();
+d.Add(Age);
+
+// dispose all
+d.Dispose();
+</code></pre>
+
+<p>AddTo extension method's sample code:</p>
+<pre><code class="cs">// init
+var d = new CompositeDisposable();
+
+Name = model.ObserveProperty(x =&gt; x.Name)
+    .ToReadOnlyReactiveProperty()
+    .AddTo(d);
+
+Age = model.ObserveProperty(x =&gt; x.Age)
+    .ToReadOnlyReactiveProperty()
+    .AddTo(d);
+
+// dispose all
+d.Dispose();
+</code></pre>
+
+<p>It's very cool!</p>
+<h2 id="catchignore">CatchIgnore</h2>
+<p>This is that catch exception and return Observable.Empty.</p>
+<pre><code class="cs">source.CatchIgnore((Exception ex) =&gt; { ... error action ... })
+    .Subscribe();
+</code></pre>
+
+<h2 id="combinelatestsvaluesareallxxxx">CombineLatestsValuesAreAllXXXX</h2>
+<p>Provides two methods.</p>
+<ul>
+<li>CombineLatestValuesAreAllTrue</li>
+<li>CombineLatestValuesAreAllFalse</li>
+</ul>
+<p>This is just shortcuts, see below.</p>
+<pre><code class="cs">/// &lt;summary&gt;
+/// Lastest values of each sequence are all true.
+/// &lt;/summary&gt;
+public static IObservable&lt;bool&gt; CombineLatestValuesAreAllTrue(
+    this IEnumerable&lt;IObservable&lt;bool&gt;&gt; sources) =&gt; 
+    sources.CombineLatest(xs =&gt; xs.All(x =&gt; x));
+
+
+/// &lt;summary&gt;
+/// Lastest values of each sequence are all false.
+/// &lt;/summary&gt;
+public static IObservable&lt;bool&gt; CombineLatestValuesAreAllFalse(
+    this IEnumerable&lt;IObservable&lt;bool&gt;&gt; sources) =&gt;
+    sources.CombineLatest(xs =&gt; xs.All(x =&gt; !x));
+</code></pre>
+
+<h2 id="canexecutechangedasobservable">CanExecuteChangedAsObservable</h2>
+<p>This is a extension method of ICommand interface.
+It is a shortcut the <code>Observable.FromEvent</code>.</p>
+<pre><code class="cs">/// &lt;summary&gt;Converts CanExecuteChanged to an observable sequence.&lt;/summary&gt;
+public static IObservable&lt;EventArgs&gt; CanExecuteChangedAsObservable&lt;T&gt;(this T source)
+    where T : ICommand =&gt;
+    Observable.FromEvent&lt;EventHandler, EventArgs&gt;(
+        h =&gt; (sender, e) =&gt; h(e),
+        h =&gt; source.CanExecuteChanged += h,
+        h =&gt; source.CanExecuteChanged -= h);
+</code></pre>
+
+<h2 id="inotifycollectionchanged-extension-methods">INotifyCollectionChanged extension methods</h2>
+<p>Convert CollectionChanged event to IObservable.</p>
+<pre><code class="cs">/// &lt;summary&gt;Observe CollectionChanged:Remove and take single item.&lt;/summary&gt;
+public static IObservable&lt;T&gt; ObserveRemoveChanged&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Remove)
+        .Select(e =&gt; (T)e.OldItems[0]);
+
+/// &lt;summary&gt;Observe CollectionChanged:Remove.&lt;/summary&gt;
+public static IObservable&lt;T[]&gt; ObserveRemoveChangedItems&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Remove)
+        .Select(e =&gt; e.OldItems.Cast&lt;T&gt;().ToArray());
+
+/// &lt;summary&gt;Observe CollectionChanged:Move and take single item.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T&gt;&gt; ObserveMoveChanged&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Move)
+        .Select(e =&gt; new OldNewPair&lt;T&gt;((T)e.OldItems[0], (T)e.NewItems[0]));
+
+/// &lt;summary&gt;Observe CollectionChanged:Move.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T[]&gt;&gt; ObserveMoveChangedItems&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Move)
+        .Select(e =&gt; new OldNewPair&lt;T[]&gt;(e.OldItems.Cast&lt;T&gt;().ToArray(), e.NewItems.Cast&lt;T&gt;().ToArray()));
+
+/// &lt;summary&gt;Observe CollectionChanged:Replace and take single item.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T&gt;&gt; ObserveReplaceChanged&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Replace)
+        .Select(e =&gt; new OldNewPair&lt;T&gt;((T)e.OldItems[0], (T)e.NewItems[0]));
+
+/// &lt;summary&gt;Observe CollectionChanged:Replace.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T[]&gt;&gt; ObserveReplaceChangedItems&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Replace)
+        .Select(e =&gt; new OldNewPair&lt;T[]&gt;(e.OldItems.Cast&lt;T&gt;().ToArray(), e.NewItems.Cast&lt;T&gt;().ToArray()));
+
+/// &lt;summary&gt;Observe CollectionChanged:Reset.&lt;/summary&gt;
+public static IObservable&lt;Unit&gt; ObserveResetChanged&lt;T&gt;(this INotifyCollectionChanged source) =&gt;
+    source.CollectionChangedAsObservable()
+        .Where(e =&gt; e.Action == NotifyCollectionChangedAction.Reset)
+        .Select(_ =&gt; new Unit());
+</code></pre>
+
+<h2 id="observablecollection-extension-methods">ObservableCollection extension methods</h2>
+<p>It is typesafe version INotifyPropertyChanged extension methods.</p>
+<pre><code class="cs">/// &lt;summary&gt;Observe CollectionChanged:Add and take single item.&lt;/summary&gt;
+public static IObservable&lt;T&gt; ObserveAddChanged&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveAddChanged&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Add.&lt;/summary&gt;
+public static IObservable&lt;T[]&gt; ObserveAddChangedItems&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveAddChangedItems&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Remove and take single item.&lt;/summary&gt;
+public static IObservable&lt;T&gt; ObserveRemoveChanged&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+     ((INotifyCollectionChanged)source).ObserveRemoveChanged&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Remove.&lt;/summary&gt;
+public static IObservable&lt;T[]&gt; ObserveRemoveChangedItems&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveRemoveChangedItems&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Move and take single item.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T&gt;&gt; ObserveMoveChanged&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveMoveChanged&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Move.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T[]&gt;&gt; ObserveMoveChangedItems&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveMoveChangedItems&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Replace and take single item.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T&gt;&gt; ObserveReplaceChanged&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveReplaceChanged&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Replace.&lt;/summary&gt;
+public static IObservable&lt;OldNewPair&lt;T[]&gt;&gt; ObserveReplaceChangedItems&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveReplaceChangedItems&lt;T&gt;();
+
+/// &lt;summary&gt;Observe CollectionChanged:Reset.&lt;/summary&gt;
+public static IObservable&lt;Unit&gt; ObserveResetChanged&lt;T&gt;(this ObservableCollection&lt;T&gt; source) =&gt;
+    ((INotifyCollectionChanged)source).ObserveResetChanged&lt;T&gt;();
+</code></pre>
+
+<h2 id="observe-propertychanged-events-of-observablecollections-items">Observe PropertyChanged events of ObservableCollection's items</h2>
+<p>Watch PropertyChanged event of ObservableCollection's items. 
+ObserveElementProperty extension method can ovserve specific property's PropertyChanged event.</p>
+<pre><code class="cs">using Reactive.Bindings.Extensions;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace ReactivePropertyEduApp
+{
+    public class Person : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private string _name;
+        public string Name
+        {
+            get =&gt; _name;
+            set
+            {
+                _name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var c = new ObservableCollection&lt;Person&gt;();
+            c.ObserveElementProperty(x =&gt; x.Name)
+                .Subscribe(x =&gt; Console.WriteLine($&quot;Subscribe: {x.Instance}, {x.Property.Name}, {x.Value}&quot;));
+
+            var neuecc = new Person { Name = &quot;neuecc&quot; };
+            var xin9le = new Person { Name = &quot;xin9le&quot; };
+            var okazuki = new Person { Name = &quot;okazuki&quot; };
+
+            Console.WriteLine(&quot;Add items&quot;);
+            c.Add(neuecc);
+            c.Add(xin9le);
+            c.Add(okazuki);
+
+            Console.WriteLine(&quot;Change okazuki name to Kazuki Ota&quot;);
+            okazuki.Name = &quot;Kazuki Ota&quot;;
+
+            Console.WriteLine(&quot;Remove okazuki from collection&quot;);
+            c.Remove(okazuki);
+
+            Console.WriteLine(&quot;Change okazuki name to okazuki&quot;);
+            okazuki.Name = &quot;okazuki&quot;;
+        }
+    }
+}
+</code></pre>
+
+<pre><code>Add items
+Subscribe: ReactivePropertyEduApp.Person, Name, neuecc
+Subscribe: ReactivePropertyEduApp.Person, Name, xin9le
+Subscribe: ReactivePropertyEduApp.Person, Name, okazuki
+Change okazuki name to Kazuki Ota
+Subscribe: ReactivePropertyEduApp.Person, Name, Kazuki Ota
+Remove okazuki from collection
+Change okazuki name to okazuki
+</code></pre>
+
+<p>If target object's property type is ReactiveProperty, then use the ObserveElementPropertyChanged extension method.</p>
+<pre><code class="cs">using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace ReactivePropertyEduApp
+{
+    public class Person
+    {
+        public ReactiveProperty&lt;string&gt; Name { get; }
+
+        public Person(string name)
+        {
+            Name = new ReactiveProperty&lt;string&gt;(name);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var c = new ObservableCollection&lt;Person&gt;();
+            c.ObserveElementObservableProperty(x =&gt; x.Name)
+                .Subscribe(x =&gt; Console.WriteLine($&quot;Subscribe: {x.Instance}, {x.Property.Name}, {x.Value}&quot;));
+
+            var neuecc = new Person(&quot;neuecc&quot;);
+            var xin9le = new Person(&quot;xin9le&quot;);
+            var okazuki = new Person(&quot;okazuki&quot;);
+
+            Console.WriteLine(&quot;Add items&quot;);
+            c.Add(neuecc);
+            c.Add(xin9le);
+            c.Add(okazuki);
+
+            Console.WriteLine(&quot;Change okazuki name to Kazuki Ota&quot;);
+            okazuki.Name.Value = &quot;Kazuki Ota&quot;;
+
+            Console.WriteLine(&quot;Remove okazuki from collection&quot;);
+            c.Remove(okazuki);
+
+            Console.WriteLine(&quot;Change okazuki name to okazuki&quot;);
+            okazuki.Name.Value = &quot;okazuki&quot;;
+        }
+    }
+}
+</code></pre>
+
+<pre><code>Add items
+Subscribe: ReactivePropertyEduApp.Person, Name, neuecc
+Subscribe: ReactivePropertyEduApp.Person, Name, xin9le
+Subscribe: ReactivePropertyEduApp.Person, Name, okazuki
+Change okazuki name to Kazuki Ota
+Subscribe: ReactivePropertyEduApp.Person, Name, Kazuki Ota
+Remove okazuki from collection
+Change okazuki name to okazuki
+</code></pre>
+
+<h2 id="inotifydataerrorinfo-extension-methods">INotifyDataErrorInfo extension methods</h2>
+<p>Convert ErrorChanged event to an IObservable&lt;DataErrorsChangedEventArgs&gt;.
+It is a shortcut of FromEvent method.</p>
+<pre><code class="cs">/// &lt;summary&gt;Converts ErrorsChanged to an observable sequence.&lt;/summary&gt;
+public static IObservable&lt;DataErrorsChangedEventArgs&gt; ErrorsChangedAsObservable&lt;T&gt;(this T subject)
+    where T : INotifyDataErrorInfo =&gt;
+    Observable.FromEvent&lt;EventHandler&lt;DataErrorsChangedEventArgs&gt;, DataErrorsChangedEventArgs&gt;(
+        h =&gt; (sender, e) =&gt; h(e),
+        h =&gt; subject.ErrorsChanged += h,
+        h =&gt; subject.ErrorsChanged -= h);
+</code></pre>
+
+<p>ObserveErrorInfo extension method is the version of raise the property value when ErrorChanged event occured.</p>
+<h2 id="inverse">Inverse</h2>
+<p>Inverse the boolean value of an IObservable&lt;bool&gt; sequence.</p>
+<pre><code class="cs">IObservable&lt;bool&gt; boolSequence = ...;
+IObservable&lt;bool&gt; inversedBoolSequence = boolSequence.Inverse();
+</code></pre>
+
+<p>It is a same as below code.</p>
+<pre><code class="cs">IObservable&lt;bool&gt; boolSequence = ...;
+IObservable&lt;bool&gt; inversedBoolSequence = boolSequence.Select(x =&gt; !x);
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Event-transfer-to-ViewModel-from-View/" class="btn btn-neutral float-right" title="Transfer event to ViewModel from View">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Notifiers/" class="btn btn-neutral" title="Useful classes which implement IObservable"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Notifiers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Event-transfer-to-ViewModel-from-View/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

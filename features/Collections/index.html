@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Collections - ReactiveProperty documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Collections";
+    var mkdocs_page_input_path = "features\\Collections.md";
+    var mkdocs_page_url = "/features/Collections/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ReactiveProperty documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/wpf/">Windows Presentation Foundation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/uwp/">Universal Windows Platform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/xf/">Xamarin.Forms</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Commanding/">Commanding</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Collections</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#reactivecollection">ReactiveCollection</a></li>
+    
+
+    <li class="toctree-l3"><a href="#collection-operations">Collection operations</a></li>
+    
+
+    <li class="toctree-l3"><a href="#readonlyreactivecollection">ReadOnlyReactiveCollection</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#create-from-iobservable">Create from IObservable</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#ifilteredreadonlyobservablecollection">IFilteredReadOnlyObservableCollection</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Notifiers/">Useful classes which implement IObservable</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Extension-methods/">Extension methods</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ReactiveProperty documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Features &raquo;</li>
+        
+      
+    
+    <li>Collections</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>ReactiveProperty provides some collection classes.</p>
+<ul>
+<li>ReactiveCollection&gt;T&lt;</li>
+<li>ReadOnlyReactiveCollection&gt;T&lt;</li>
+<li>IFilteredReadOnlyObservableCollection&gt;T&lt;</li>
+</ul>
+<h2 id="reactivecollection">ReactiveCollection</h2>
+<p>ReactiveCollection hnherits ObservableCollection.
+This class is created from IObservable.
+And adds an item when push a value from source IObservable.
+ReactiveCollection executes this process using IScheduler. Default scheduler run process on the UI thread.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public ReactiveCollection&lt;DateTime&gt; Records { get; }
+
+    public ReactiveCommand StartRecordCommand { get; }
+
+    public ViewModel()
+    {
+        StartRecordCommand = new ReactiveCommand();
+        // Create a ReactiveCollection instance from IObservable
+        Records = StartRecordCommand
+            .ToUnit()
+            .Take(1)
+            .Concat(Observable.Defer(() =&gt; Observable.Interval(TimeSpan.FromSeconds(1)).ToUnit()))
+            .Select(_ =&gt; DateTime.Now)
+            .ToReactiveCollection();
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>ToUnit extension method is defined in the Reactive.Bindings.Extensions namespace.
+This extension method is same as <code>.Select(_ =&gt; Unide.Default)</code>.</p>
+</blockquote>
+<p>Example of UWP platform.</p>
+<p>MainPage.xaml.cs</p>
+<pre><code class="cs">public sealed partial class MainPage : Page
+{
+    public ViewModel ViewModel { get; } = new ViewModel();
+    public MainPage()
+    {
+        this.InitializeComponent();
+    }
+}
+</code></pre>
+
+<p>MainPage.xaml</p>
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;Button Content=&quot;Start&quot;
+                    Command=&quot;{x:Bind ViewModel.StartRecordCommand}&quot;
+                    Margin=&quot;5&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.Records}&quot;
+                  Grid.Row=&quot;1&quot; /&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="Basic usage" src="../images/collections-reactivecollection-basic-usage.gif" /></p>
+<h2 id="collection-operations">Collection operations</h2>
+<p>ReactiveCollection class has XxxxOnScheduler methods. For example, AddOnScheduler, RemoveOnScheduler, ClearOnScheduler, GetOnScheduler, etc...
+Those methods are run on the IScheduler.</p>
+<p>Can call from outside of UI thread.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public ReactiveCollection&lt;DateTime&gt; Records { get; }
+
+    public ReactiveCommand StartRecordCommand { get; }
+
+    public ReactiveCommand ClearCommand { get; }
+
+    public ViewModel()
+    {
+        StartRecordCommand = new ReactiveCommand();
+        // Create a ReactiveCollection instance from IObservable
+        Records = StartRecordCommand
+            .ToUnit()
+            .Take(1)
+            .Concat(Observable.Defer(() =&gt; Observable.Interval(TimeSpan.FromSeconds(1)).ToUnit()))
+            .Select(_ =&gt; DateTime.Now)
+            .ToReactiveCollection();
+
+        ClearCommand = new ReactiveCommand();
+        ClearCommand.ObserveOn(TaskPoolScheduler.Default) // run on the another thread
+            .Subscribe(_ =&gt; Records.ClearOnScheduler());
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;Button Content=&quot;Start&quot;
+                    Command=&quot;{x:Bind ViewModel.StartRecordCommand}&quot;
+                    Margin=&quot;5&quot; /&gt;
+            &lt;Button Content=&quot;Clear&quot;
+                    Command=&quot;{x:Bind ViewModel.ClearCommand}&quot;
+                    Margin=&quot;5&quot; /&gt;
+        &lt;/StackPanel&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.Records}&quot;
+                  Grid.Row=&quot;1&quot; /&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="Collection operations" src="../images/collections-reactivecollection-collection-operations.gif" /></p>
+<p>When ReactiveCollection class was called Dispose method, then unsubscribe the source IObservable instance.</p>
+<h2 id="readonlyreactivecollection">ReadOnlyReactiveCollection</h2>
+<p>ReadOnlyReactiveCollection class provides one-way synchronization from ObservableCollection. Can set a converting logic, and dispatch CollectionChanged event raise on the IScheduler. Default IScheduler dispatch to the UI thread.</p>
+<p>At first, exist a POCO classes.</p>
+<pre><code class="cs">public class BindableBase : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void RaisePropertyChanged([CallerMemberName]string propertyName = null) =&gt;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    protected void SetProperty&lt;T&gt;(ref T field, T value, [CallerMemberName]string propertyName = null)
+    {
+        if (EqualityComparer&lt;T&gt;.Default.Equals(field, value))
+        {
+            return;
+        }
+
+        field = value;
+        RaisePropertyChanged(propertyName);
+    }
+}
+
+public class TimerObject : BindableBase, IDisposable
+{
+    private IDisposable Disposable { get; }
+
+    private long _count;
+    public long Count
+    {
+        get { return _count; }
+        private set { SetProperty(ref _count, value); }
+    }
+
+    public TimerObject()
+    {
+        Disposable = Observable.Interval(TimeSpan.FromSeconds(1))
+            .Subscribe(_ =&gt; Count++);
+    }
+
+    public void Dispose()
+    {
+        Disposable.Dispose();
+    }
+}
+</code></pre>
+
+<p>This is a simple class that counts up the Count property per second.</p>
+<p>Wrap the class to ViewModel layer using ReactiveProperty.</p>
+<pre><code class="cs">public class TimerObjectViewModel : IDisposable
+{
+    public TimerObject Model { get; }
+
+    public ReadOnlyReactiveProperty&lt;string&gt; CountMessage { get; }
+
+    public TimerObjectViewModel(TimerObject timerObject)
+    {
+        Model = timerObject;
+        CountMessage = Model.ObserveProperty(x =&gt; x.Count)
+            .Select(x =&gt; $&quot;Count value is {x}.&quot;)
+            .ToReadOnlyReactiveProperty();
+    }
+
+    public void Dispose()
+    {
+        Model.Dispose();
+    }
+}
+</code></pre>
+
+<p>Manage TimerObject instances using the ObservableCollection.
+We should provide TimerObjectViewModel instances to View layer, can use ReadOnlyReactiveCollection class.
+ReadOnlyReactiveCollection instance is created using ToReadOnlyReactiveCollection extension method. </p>
+<pre><code class="cs">public class ViewModel
+{
+    // TimerObject collection
+    private ReactiveCollection&lt;TimerObject&gt; ModelCollection { get; }
+    // TimerObjectViewModel collection
+    public ReadOnlyReactiveCollection&lt;TimerObjectViewModel&gt; ViewModelCollection { get; }
+
+    public ReactiveCommand AddCommand { get; }
+
+    public ReactiveCommand&lt;TimerObjectViewModel&gt; RemoveCommand { get; }
+
+    public ViewModel()
+    {
+        AddCommand = new ReactiveCommand();
+        ModelCollection = AddCommand
+            .Select(_ =&gt; new TimerObject())
+            .ToReactiveCollection();
+        // Create a ReadOnlyReactiveCollection instance using the converting logic.
+        ViewModelCollection = ModelCollection
+            .ToReadOnlyReactiveCollection(x =&gt; new TimerObjectViewModel(x));
+
+        RemoveCommand = new ReactiveCommand&lt;TimerObjectViewModel&gt;()
+            .WithSubscribe(x =&gt; ModelCollection.Remove(x.Model));
+    }
+}
+</code></pre>
+
+<p>Test view is below.</p>
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      xmlns:viewModels=&quot;using:ViewModels&quot;
+      mc:Ignorable=&quot;d&quot;
+      x:Name=&quot;root&quot;&gt;
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Button Content=&quot;Add&quot;
+                Command=&quot;{x:Bind ViewModel.AddCommand}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.ViewModelCollection}&quot;
+                  Grid.Row=&quot;1&quot;&gt;
+            &lt;ListView.ItemTemplate&gt;
+                &lt;DataTemplate x:DataType=&quot;viewModels:TimerObjectViewModel&quot;&gt;
+                    &lt;Grid&gt;
+                        &lt;Grid.ColumnDefinitions&gt;
+                            &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
+                            &lt;ColumnDefinition /&gt;
+                        &lt;/Grid.ColumnDefinitions&gt;
+                        &lt;Button Content=&quot;Remove&quot;
+                                Command=&quot;{Binding ViewModel.RemoveCommand, ElementName=root}&quot;
+                                CommandParameter=&quot;{x:Bind}&quot;
+                                Margin=&quot;5&quot; /&gt;
+                        &lt;TextBlock Text=&quot;{x:Bind CountMessage.Value, Mode=OneWay}&quot;
+                                   VerticalAlignment=&quot;Center&quot;
+                                   Style=&quot;{ThemeResource BodyTextBlockStyle}&quot;
+                                   Grid.Column=&quot;1&quot; /&gt;
+                    &lt;/Grid&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/ListView.ItemTemplate&gt;
+        &lt;/ListView&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="ReadOnlyReactiveCollection" src="../images/collections-reactivecollection-readonly-collection.gif" /></p>
+<p>When the instance was removed in the ReadOnlyReactiveCollection, then the Dispose method is called. If don't need this behavior, then set false the ToReadOnlyReactiveCollection's disposeElement argument.</p>
+<pre><code class="cs">ViewModelCollection = ModelCollection
+    .ToReadOnlyReactiveCollection(x =&gt; new TimerObjectViewModel(x), disposeElement: false);
+</code></pre>
+
+<h3 id="create-from-iobservable">Create from IObservable</h3>
+<p>ReadOnlyReactiveCollection can create from IObservable, it is same as the ReactiveCollection. But, ReadOnlyReactiveCollection doesn't have collection operation methods.
+ToReadOnlyReactiveCollection extension method has a onReset argument which type is IObservable&lt;Unity&gt;.
+When this argument raises value, then the collection is cleared.</p>
+<pre><code class="cs">public class ViewModel
+{
+    public ReadOnlyReactiveCollection&lt;string&gt; Messages { get; }
+
+    public ReactiveCommand ResetCommand { get; }
+
+    public ViewModel()
+    {
+        ResetCommand = new ReactiveCommand();
+        Messages = Observable.Interval(TimeSpan.FromSeconds(1))
+            .Select(_ =&gt; DateTime.Now.ToString(&quot;yyyy/MM/dd HH:mm:ss&quot;))
+            .ToReadOnlyReactiveCollection(ResetCommand.ToUnit());
+    }
+}
+</code></pre>
+
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      mc:Ignorable=&quot;d&quot;&gt;
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Button Content=&quot;Reset&quot;
+                Command=&quot;{x:Bind ViewModel.ResetCommand}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.Messages}&quot;
+                  Grid.Row=&quot;1&quot; /&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p>When the ResetCommand execute, then clear the Messages.</p>
+<p><img alt="Reset" src="../images/collections-reactivecollection-readonly-collection-reset.gif" /></p>
+<h2 id="ifilteredreadonlyobservablecollection">IFilteredReadOnlyObservableCollection</h2>
+<p>This provides collection which filter realtime from ObservableCollection.
+IFilteredReadOnlyObservableCollection watch the PropertyChanged event of source collection item and the CollectionChanged event.</p>
+<pre><code class="cs">public class ValueHolder : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    public int Id { get; set; }
+
+    private int _value;
+    public int Value
+    {
+        get =&gt; _value;
+        set
+        {
+            _value = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+        }
+    }
+
+    public ValueHolder()
+    {
+        var r = new Random();
+        Observable.Interval(TimeSpan.FromSeconds(1))
+            .ObserveOnUIDispatcher()
+            .Subscribe(_ =&gt; Value = r.Next(10));
+    }
+}
+
+public class ViewModel
+{
+    public ReactiveCollection&lt;ValueHolder&gt; ValuesSource { get; }
+
+    public IFilteredReadOnlyObservableCollection&lt;ValueHolder&gt; Values { get; }
+
+    public ReactiveCommand AddCommand { get; }
+
+    public ViewModel()
+    {
+        AddCommand = new ReactiveCommand();
+        ValuesSource = AddCommand
+            .Select(_ =&gt; new ValueHolder { Id = ValuesSource.Count })
+            .ToReactiveCollection();
+        Values = ValuesSource.ToFilteredReadOnlyObservableCollection(
+            x =&gt; x.Value &gt; 7);
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>ObserveOnUIDispatcher extension method switch to the UI thread from the current thread.</p>
+</blockquote>
+<pre><code class="xml">&lt;Page x:Class=&quot;App1.MainPage&quot;
+      xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+      xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+      xmlns:local=&quot;using:App1&quot;
+      xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+      xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+      xmlns:viewModels=&quot;using:ViewModels&quot;
+      mc:Ignorable=&quot;d&quot;
+      x:Name=&quot;root&quot;&gt;
+    &lt;Page.Resources&gt;
+        &lt;DataTemplate x:Key=&quot;valueHolderDataTemplate&quot;
+                      x:DataType=&quot;viewModels:ValueHolder&quot;&gt;
+            &lt;TextBlock&gt;
+                &lt;Run Text=&quot;Id: &quot; /&gt;
+                &lt;Run Text=&quot;{x:Bind Id}&quot; /&gt;
+                &lt;Run Text=&quot;, Value: &quot; /&gt;
+                &lt;Run Text=&quot;{x:Bind Value, Mode=OneWay}&quot; /&gt;
+            &lt;/TextBlock&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/Page.Resources&gt;
+    &lt;Grid Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
+        &lt;Grid.RowDefinitions&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;RowDefinition /&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+            &lt;ColumnDefinition /&gt;
+            &lt;ColumnDefinition /&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+        &lt;Button Content=&quot;Add&quot;
+                Command=&quot;{x:Bind ViewModel.AddCommand}&quot;
+                Margin=&quot;5&quot; /&gt;
+        &lt;TextBlock Text=&quot;Values&quot;
+                   Style=&quot;{ThemeResource TitleTextBlockStyle}&quot;
+                   Grid.Row=&quot;1&quot; /&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.ValuesSource}&quot;
+                  ItemTemplate=&quot;{StaticResource valueHolderDataTemplate}&quot;
+                  Grid.Row=&quot;2&quot; /&gt;
+        &lt;TextBlock Text=&quot;Filtered Values&quot;
+                   Style=&quot;{ThemeResource TitleTextBlockStyle}&quot;
+                   Grid.Row=&quot;1&quot;
+                   Grid.Column=&quot;1&quot; /&gt;
+        &lt;ListView ItemsSource=&quot;{x:Bind ViewModel.Values}&quot;
+                  ItemTemplate=&quot;{StaticResource valueHolderDataTemplate}&quot;
+                  Grid.Row=&quot;2&quot;
+                  Grid.Column=&quot;1&quot; /&gt;
+    &lt;/Grid&gt;
+&lt;/Page&gt;
+</code></pre>
+
+<p><img alt="IFilteredReadOnlyObservableCollection" src="../images/collections-filtered-collection.gif" /></p>
+<p>When the Value property is greater than 7, then display the value to the ListView which is the right side.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Work-together-with-plane-model-layer-objects/" class="btn btn-neutral float-right" title="Work together with plane model layer objects">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Commanding/" class="btn btn-neutral" title="Commanding"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Commanding/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Work-together-with-plane-model-layer-objects/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

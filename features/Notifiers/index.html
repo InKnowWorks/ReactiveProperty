@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Useful classes which implement IObservable - ReactiveProperty documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Useful classes which implement IObservable";
+    var mkdocs_page_input_path = "features\\Notifiers.md";
+    var mkdocs_page_url = "/features/Notifiers/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ReactiveProperty documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/wpf/">Windows Presentation Foundation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/uwp/">Universal Windows Platform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/xf/">Xamarin.Forms</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Commanding/">Commanding</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Collections/">Collections</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Useful classes which implement IObservable</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#booleannotifier">BooleanNotifier</a></li>
+    
+
+    <li class="toctree-l3"><a href="#countnotifier">CountNotifier</a></li>
+    
+
+    <li class="toctree-l3"><a href="#schedulednotifier">ScheduledNotifier</a></li>
+    
+
+    <li class="toctree-l3"><a href="#busynotifier">BusyNotifier</a></li>
+    
+
+    <li class="toctree-l3"><a href="#messagebroker">MessageBroker</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Extension-methods/">Extension methods</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ReactiveProperty documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Features &raquo;</li>
+        
+      
+    
+    <li>Useful classes which implement IObservable</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Reactive.Bindings.Notifiers namespace provides many useful classes which implements IObservable interface.</p>
+<h2 id="booleannotifier">BooleanNotifier</h2>
+<p>BooleanNotifier class implements IObservable&lt;bool&gt; interface.
+And has some methods and property.</p>
+<ul>
+<li>TurnOn method<ul>
+<li>Change state to true.</li>
+</ul>
+</li>
+<li>TurnOff method<ul>
+<li>Change state to false.</li>
+</ul>
+</li>
+<li>SwitchValue method<ul>
+<li>Switch state.</li>
+</ul>
+</li>
+<li>Value property<ul>
+<li>Set state</li>
+</ul>
+</li>
+</ul>
+<p>The initial state can be set the constructor. The default value is false.</p>
+<pre><code class="cs">var n = new BooleanNotifier();
+n.Subscribe(x =&gt; Debug.WriteLine(x));
+
+n.TurnOn(); // true
+n.TurnOff(); // false
+n.Value = true; // true
+n.Value = false; // false
+</code></pre>
+
+<p>It can use to source of ReactiveCommand.</p>
+<h2 id="countnotifier">CountNotifier</h2>
+<p>CountNotifier class implements IObservable&lt;CountChangedStates&gt; interface. It provides increment and decrement features, and raise a CountChangedStates value when the state changed.</p>
+<p>CountChangedStates enum is defined as below.</p>
+<pre><code class="cs">/// &lt;summary&gt;Event kind of CountNotifier.&lt;/summary&gt;
+public enum CountChangedStatus
+{
+    /// &lt;summary&gt;Count incremented.&lt;/summary&gt;
+    Increment,
+    /// &lt;summary&gt;Count decremented.&lt;/summary&gt;
+    Decrement,
+    /// &lt;summary&gt;Count is zero.&lt;/summary&gt;
+    Empty,
+    /// &lt;summary&gt;Count arrived max.&lt;/summary&gt;
+    Max
+}
+</code></pre>
+
+<p>CountNotifier's max value can be set from constructor argument.</p>
+<p>How to use.</p>
+<pre><code class="cs">var c = new CountNotifier(); // default max value is int.MaxValue
+// output status.
+c.Subscribe(x =&gt; Debug.WriteLine(x));
+// output current value.
+c.Select(_ =&gt; c.Count).Subscribe(x =&gt; Debug.WriteLine(x));
+// increment
+var d = c.Increment(10);
+// revert increment
+d.Dispose();
+// increment and decrement
+c.Increment(10);
+c.Decrement(5);
+// output current value.
+Debug.WriteLine(c.Count);
+</code></pre>
+
+<p>Output is below.</p>
+<pre><code>Increment
+10
+Decrement
+0
+Empty
+0
+Increment
+10
+Decrement
+5
+5
+</code></pre>
+
+<h2 id="schedulednotifier">ScheduledNotifier</h2>
+<p>This class provides it that raise the value on the scheduler. Default scheduler is <code>Scheduler.Immediate</code>. Set the scheduler using constructor argument.</p>
+<pre><code class="cs">var n = new ScheduledNotifier&lt;string&gt;();
+n.Subscribe(x =&gt; Debug.WriteLine(x));
+// output the value immediately
+n.Report(&quot;Hello world&quot;);
+// output the value after 2 seconds.
+n.Report(&quot;After 2 seconds.&quot;, TimeSpan.FromSeconds(2));
+</code></pre>
+
+<h2 id="busynotifier">BusyNotifier</h2>
+<p>This class implements IObservable&lt;bool&gt; interface.
+It raises <code>true</code> during running the process, raises 'false' when all processes end.</p>
+<p>The StartProcess method returns an IDisposable instance. When finishing the process, then call the Dispose method.</p>
+<pre><code class="cs">using Reactive.Bindings.Notifiers;
+using System;
+using System.Threading.Tasks;
+
+namespace ReactivePropertyEduApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MainAsync(args).Wait();
+        }
+
+        static async Task MainAsync(string[] args)
+        {
+            var b = new BusyNotifier();
+            b.Subscribe(x =&gt; Console.WriteLine($&quot;{DateTime.Now.ToString(&quot;HH:mm:ss&quot;)}: OnNext: {x}&quot;));
+
+            await Task.WhenAll(
+                Task.Run(async () =&gt;
+                {
+                    using (b.ProcessStart())
+                    {
+                        Console.WriteLine($&quot;{DateTime.Now.ToString(&quot;HH:mm:ss&quot;)}: Process1 started.&quot;);
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        Console.WriteLine($&quot;{DateTime.Now.ToString(&quot;HH:mm:ss&quot;)}: Process1 finished.&quot;);
+                    }
+                }),
+                Task.Run(async () =&gt;
+                {
+                    using (b.ProcessStart())
+                    {
+                        Console.WriteLine($&quot;{DateTime.Now.ToString(&quot;HH:mm:ss&quot;)}: Process2 started.&quot;);
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        Console.WriteLine($&quot;{DateTime.Now.ToString(&quot;HH:mm:ss&quot;)}: Process2 finished.&quot;);
+                    }
+                }));
+        }
+    }
+}
+</code></pre>
+
+<p>Output is below.</p>
+<pre><code>15:07:45: OnNext: False
+15:07:45: OnNext: True
+15:07:45: Process1 started.
+15:07:45: Process2 started.
+15:07:46: Process1 finished.
+15:07:47: Process2 finished.
+15:07:47: OnNext: False
+</code></pre>
+
+<h2 id="messagebroker">MessageBroker</h2>
+<p>I suggest new notifier called MessageBroker , in-memory pubsub. This is Rx and async friendly EventAggregator or MessageBus or etc. We can use this for messenger pattern.
+If reviewer accept this code, please add to all platforms.</p>
+<pre><code class="cs">using Reactive.Bindings.Notifiers;
+using System;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+
+public class MyClass
+{
+    public int MyProperty { get; set; }
+
+    public override string ToString()
+    {
+        return &quot;MP:&quot; + MyProperty;
+    }
+}
+class Program
+{
+    static void RunMessageBroker()
+    {
+        // global scope pub-sub messaging
+        MessageBroker.Default.Subscribe&lt;MyClass&gt;(x =&gt;
+        {
+            Console.WriteLine(&quot;A:&quot; + x);
+        });
+
+        var d = MessageBroker.Default.Subscribe&lt;MyClass&gt;(x =&gt;
+        {
+            Console.WriteLine(&quot;B:&quot; + x);
+        });
+
+        // support convert to IObservable&lt;T&gt;
+        MessageBroker.Default.ToObservable&lt;MyClass&gt;().Subscribe(x =&gt;
+        {
+            Console.WriteLine(&quot;C:&quot; + x);
+        });
+
+        MessageBroker.Default.Publish(new MyClass { MyProperty = 100 });
+        MessageBroker.Default.Publish(new MyClass { MyProperty = 200 });
+        MessageBroker.Default.Publish(new MyClass { MyProperty = 300 });
+
+        d.Dispose(); // unsubscribe
+        MessageBroker.Default.Publish(new MyClass { MyProperty = 400 });
+    }
+
+    static async Task RunAsyncMessageBroker()
+    {
+        // asynchronous message pub-sub
+        AsyncMessageBroker.Default.Subscribe&lt;MyClass&gt;(async x =&gt;
+        {
+            Console.WriteLine(&quot;A:&quot; + x);
+            await Task.Delay(TimeSpan.FromSeconds(1));
+        });
+
+        var d = AsyncMessageBroker.Default.Subscribe&lt;MyClass&gt;(async x =&gt;
+        {
+            Console.WriteLine(&quot;B:&quot; + x);
+            await Task.Delay(TimeSpan.FromSeconds(2));
+        });
+
+        // await all subscriber complete
+        await AsyncMessageBroker.Default.PublishAsync(new MyClass { MyProperty = 100 });
+        await AsyncMessageBroker.Default.PublishAsync(new MyClass { MyProperty = 200 });
+        await AsyncMessageBroker.Default.PublishAsync(new MyClass { MyProperty = 300 });
+
+        d.Dispose(); // unsubscribe
+        await AsyncMessageBroker.Default.PublishAsync(new MyClass { MyProperty = 400 });
+    }
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine(&quot;MessageBroker&quot;);
+        RunMessageBroker();
+
+        Console.WriteLine(&quot;AsyncMessageBroker&quot;);
+        RunAsyncMessageBroker().Wait();
+    }
+}
+</code></pre>
+
+<p>Messenger pattern's multi thread dispatch can handle easily by Rx.</p>
+<pre><code class="cs">MessageBroker.Default.ToObservable&lt;MyClass&gt;()
+    .ObserveOn(Dispatcher) // Rx Magic!
+    .Subscribe(x =&gt;
+    {
+        Console.WriteLine(x);
+    });
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Extension-methods/" class="btn btn-neutral float-right" title="Extension methods">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Work-together-with-plane-model-layer-objects/" class="btn btn-neutral" title="Work together with plane model layer objects"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Work-together-with-plane-model-layer-objects/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Extension-methods/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

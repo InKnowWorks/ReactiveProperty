@@ -12,13 +12,41 @@
     
         
     <url>
+     <loc>/getting-started/wpf/</loc>
+     <lastmod>2018-01-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/getting-started/uwp/</loc>
+     <lastmod>2018-01-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/getting-started/xf/</loc>
+     <lastmod>2018-01-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/features/ReactiveProperty/</loc>
+     <lastmod>2018-01-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/features/Commanding/</loc>
      <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/features/ReactiveProperty/</loc>
+     <loc>/features/Collections/</loc>
      <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -29,24 +57,20 @@
      <changefreq>daily</changefreq>
     </url>
         
-    
-
-    
-        
     <url>
-     <loc>/getting-started/Universal-Windows-Platform/</loc>
+     <loc>/features/Notifiers/</loc>
      <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/getting-started/Windows-Presentation-Foundation/</loc>
+     <loc>/features/Extension-methods/</loc>
      <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/getting-started/Xamarin-Forms/</loc>
+     <loc>/features/Event-transfer-to-ViewModel-from-View/</loc>
      <lastmod>2018-01-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
