@@ -199,7 +199,7 @@ This has following features.</p>
 </ul>
 <p>Yes, The value property can bind to XAML control's property.
 And the class call the IObserver&lt;T&gt;#OnNext method when set the value.</p>
-<p>A sample code is below.</p>
+<p>A sample code is as below.</p>
 <pre><code class="cs">using Reactive.Bindings;
 using System;
 
@@ -291,7 +291,7 @@ This is an only limitation of this library.</p>
 &lt;TextBox Text=&quot;{Binding Name.Value}&quot; /&gt;
 
 &lt;!-- In the UWP(Runtime data binding) --&gt;
-&lt;TextBox Text=&quot;{Binding Name}.Value&quot; /&gt;
+&lt;TextBox Text=&quot;{Binding Name.Value}&quot; /&gt;
 
 &lt;!-- In the UWP(Compile time data binding) --&gt;
 &lt;TextBox Text=&quot;{x:Bind ViewModel.Name.Value, Mode=TwoWay}&quot; /&gt;
