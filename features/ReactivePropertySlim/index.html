@@ -88,7 +88,9 @@
     
         <ul>
         
-            <li><a class="toctree-l4" href="#dispatch-to-the-ui-thread">Dispatch to the UI thread</a></li>
+            <li><a class="toctree-l4" href="#dispatch-to-ui-thread">Dispatch to UI thread</a></li>
+        
+            <li><a class="toctree-l4" href="#validation">Validation</a></li>
         
         </ul>
     
@@ -172,7 +174,7 @@
 <li>Provides a Value property.</li>
 <li>Provides a ForceNotify method.</li>
 </ul>
-<p>And ReactivePropertySlim is hight performance.</p>
+<p>And ReactivePropertySlim is high performance.</p>
 <p>This class can use like same as ReactiveProperty.</p>
 <pre><code class="cs">var rp = new ReactivePropertySlim&lt;string&gt;(&quot;neuecc&quot;);
 rp.Select(x =&gt; $&quot;{x}-san&quot;).Subscribe(x =&gt; Console.WriteLine(x));
@@ -195,13 +197,17 @@ var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReactivePropertySlim();
 <pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReadOnlyReactivePropertySlim();
 </code></pre>
 
-<h2 id="dispatch-to-the-ui-thread">Dispatch to the UI thread</h2>
+<h2 id="dispatch-to-ui-thread">Dispatch to UI thread</h2>
 <p>ReactivePropertySlim class doesn't dispatch to UI thread automaticaly.
 If want this feature, then use the ReactiveProperty or dispatch to UI thread expressly.</p>
 <pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1))
     .ObserveOnUIDispatcher() // dispatch to UI thread
     .ToReadOnlyReactivePropertySlim();
 </code></pre>
+
+<h2 id="validation">Validation</h2>
+<p>Slim class doesn't provide the validation feature.
+If want to this feature, then use to ReactiveProperty class.</p>
               
             </div>
           </div>
