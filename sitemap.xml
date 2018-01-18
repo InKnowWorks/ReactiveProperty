@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,19 +13,19 @@
         
     <url>
      <loc>/getting-started/wpf/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/getting-started/uwp/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/getting-started/xf/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -35,43 +35,49 @@
         
     <url>
      <loc>/features/ReactiveProperty/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/features/ReactivePropertySlim/</loc>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Commanding/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Collections/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Work-together-with-plane-model-layer-objects/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Notifiers/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Extension-methods/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/features/Event-transfer-to-ViewModel-from-View/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -80,7 +86,7 @@
     
     <url>
      <loc>/samples/</loc>
-     <lastmod>2018-01-10</lastmod>
+     <lastmod>2018-01-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

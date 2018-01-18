@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  
+  <meta name="author" content="neuecc, xin9le, okazuki">
   <link rel="shortcut icon" href="../../img/favicon.ico">
   <title>ReactiveProperty - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -112,6 +112,9 @@
     <li class="toctree-l3"><a href="#the-mode-of-reactiveproperty">The mode of ReactiveProperty</a></li>
     
 
+    <li class="toctree-l3"><a href="#forcenotify">ForceNotify</a></li>
+    
+
     <li class="toctree-l3"><a href="#readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</a></li>
     
 
@@ -119,6 +122,10 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../ReactivePropertySlim/">ReactivePropertySlim</a>
                 </li>
                 <li class="">
                     
@@ -573,9 +580,25 @@ This can be set following values.</p>
 </ul>
 <p>Default value is <code>ReactivePropertyMode.DistinctUntilChanged | ReactivePropertyMode.RaiseLatestValueOnSubscribe</code>.</p>
 <p>If you don't need this behavior, then you can set ReactivePropertyMode.None value.</p>
-<pre><code class="cs">var x = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;, mode: ReactivePropertyMode.None);
-x.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; don't output value
-x.Value = &quot;initial value&quot;; // -&gt; initial value
+<pre><code class="cs">var rp = new ReactiveProperty&lt;string&gt;(&quot;initial value&quot;, mode: ReactivePropertyMode.None);
+rp.Subscribe(x =&gt; Console.WriteLine(x)); // -&gt; don't output value
+rp.Value = &quot;initial value&quot;; // -&gt; initial value
+</code></pre>
+
+<h2 id="forcenotify">ForceNotify</h2>
+<p>If want to push the value forcibly, then can use the ForceNotify method.
+This method pushes the value to subscribers, and raise a PropertyChanged event.</p>
+<pre><code class="cs">var rp = new ReactiveProperty&lt;string&gt;(&quot;value&quot;);
+rp.Subscribe(x =&gt; Console.WriteLine(x));
+rp.PropertyChanged += (_, e) =&gt; Console.WriteLine($&quot;{e.PropertyName} changed&quot;);
+
+rp.ForceNotify();
+</code></pre>
+
+<p>Output is as below.</p>
+<pre><code>value                  # first subscribe
+value                  # by the ForceNotify method
+Value changed          # by the ForceNotify method
 </code></pre>
 
 <h2 id="readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</h2>
@@ -630,7 +653,7 @@ In other instance's events subscribe, then you should call Dispose method when t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Commanding/" class="btn btn-neutral float-right" title="Commanding">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ReactivePropertySlim/" class="btn btn-neutral float-right" title="ReactivePropertySlim">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../../getting-started/xf/" class="btn btn-neutral" title="Xamarin.Forms"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -662,7 +685,7 @@ In other instance's events subscribe, then you should call Dispose method when t
         <span><a href="../../getting-started/xf/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Commanding/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../ReactivePropertySlim/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

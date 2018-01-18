@@ -8,7 +8,7 @@
   
   <meta name="author" content="neuecc, xin9le, okazuki">
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Windows Presentation Foundation - ReactiveProperty documentation</title>
+  <title>ReactivePropertySlim - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Windows Presentation Foundation";
-    var mkdocs_page_input_path = "getting-started\\wpf.md";
-    var mkdocs_page_url = "/getting-started/wpf/";
+    var mkdocs_page_name = "ReactivePropertySlim";
+    var mkdocs_page_input_path = "features\\ReactivePropertySlim.md";
+    var mkdocs_page_url = "/features/ReactivePropertySlim/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -56,29 +56,17 @@
 		
     <span class="caption-text">Getting started</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Windows Presentation Foundation</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#create-a-project">Create a project</a></li>
-    
-
-    <li class="toctree-l3"><a href="#edit-codes">Edit codes</a></li>
-    
-
-    <li class="toctree-l3"><a href="#launch-the-application">Launch the application.</a></li>
-    
-
-    </ul>
+    <a class="" href="../../getting-started/wpf/">Windows Presentation Foundation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../uwp/">Universal Windows Platform</a>
+    <a class="" href="../../getting-started/uwp/">Universal Windows Platform</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../xf/">Xamarin.Forms</a>
+    <a class="" href="../../getting-started/xf/">Xamarin.Forms</a>
                 </li>
     </ul>
 	    </li>
@@ -89,35 +77,41 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../features/ReactiveProperty/">ReactiveProperty</a>
+    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">ReactivePropertySlim</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#dispatch-to-the-ui-thread">Dispatch to the UI thread</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/ReactivePropertySlim/">ReactivePropertySlim</a>
+    <a class="" href="../Commanding/">Commanding</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/Commanding/">Commanding</a>
+    <a class="" href="../Collections/">Collections</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/Collections/">Collections</a>
+    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+    <a class="" href="../Notifiers/">Useful classes which implement IObservable</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/Notifiers/">Useful classes which implement IObservable</a>
+    <a class="" href="../Extension-methods/">Extension methods</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../features/Extension-methods/">Extension methods</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../features/Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
+    <a class="" href="../Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
                 </li>
     </ul>
 	    </li>
@@ -149,11 +143,11 @@
     
       
         
-          <li>Getting started &raquo;</li>
+          <li>Features &raquo;</li>
         
       
     
-    <li>Windows Presentation Foundation</li>
+    <li>ReactivePropertySlim</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -163,73 +157,44 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="create-a-project">Create a project</h2>
+                <p>ReactivePropertySlim is a lightweight version ReactiveProperty.</p>
+<p>ReactivePropertySlim provides following features:</p>
 <ul>
-<li>Create a WPF App (.NET Framework) project.</li>
-<li>Install ReactiveProperty from NuGet.</li>
+<li>Implements INotifyPropertyChanged interface.</li>
+<li>Implements IObservable&lt;T&gt; interface.</li>
+<li>Provides a Value property.</li>
+<li>Provides a ForceNotify method.</li>
 </ul>
-<h2 id="edit-codes">Edit codes</h2>
-<ul>
-<li>Create a MainWindowViewModel.cs file.</li>
-<li>Edit files like following.</li>
-</ul>
-<p>MainWindowViewModel.cs</p>
-<pre><code class="cs">using Reactive.Bindings;
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive.Linq;
-
-namespace WpfApp1
-{
-    class MainWindowViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public ReactiveProperty&lt;string&gt; Input { get; }
-        public ReadOnlyReactiveProperty&lt;string&gt; Output { get; }
-
-        public MainWindowViewModel()
-        {
-            Input = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
-            Output = Input
-                .Delay(TimeSpan.FromSeconds(1))
-                .Select(x =&gt; x.ToUpper())
-                .ToReadOnlyReactiveProperty();
-        }
-    }
-}
+<p>And ReactivePropertySlim is hight performance.</p>
+<p>ReactivePropertySlim can use same as ReactiveProperty.</p>
+<pre><code class="cs">var rp = new ReactivePropertySlim&lt;string&gt;(&quot;neuecc&quot;);
+rp.Select(x =&gt; $&quot;{x}-san&quot;).Subscribe(x =&gt; Console.WriteLine(x));
+rp.Value = &quot;xin9le&quot;;
+rp.Value = &quot;okazuki&quot;;
 </code></pre>
 
-<p>MainWindow.xaml</p>
-<pre><code class="xml">&lt;Window x:Class=&quot;WpfApp1.MainWindow&quot;
-        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
-        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
-        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
-        xmlns:local=&quot;clr-namespace:WpfApp1&quot;
-        mc:Ignorable=&quot;d&quot;
-        Title=&quot;MainWindow&quot;
-        Height=&quot;350&quot;
-        Width=&quot;525&quot;&gt;
-    &lt;Window.DataContext&gt;
-        &lt;local:MainWindowViewModel /&gt;
-    &lt;/Window.DataContext&gt;
-    &lt;StackPanel&gt;
-        &lt;Label Content=&quot;Input&quot; /&gt;
-        &lt;TextBox Text=&quot;{Binding Input.Value, UpdateSourceTrigger=PropertyChanged}&quot;
-                 Margin=&quot;5&quot; /&gt;
-        &lt;Label Content=&quot;Output&quot; /&gt;
-        &lt;TextBlock Text=&quot;{Binding Output.Value}&quot;
-                   Margin=&quot;5&quot; /&gt;
-    &lt;/StackPanel&gt;
-&lt;/Window&gt;
+<p>Output is as below.</p>
+<pre><code>neuecc-san
+xin9le-san
+okazuki-san
 </code></pre>
 
-<h2 id="launch-the-application">Launch the application.</h2>
-<p>After launch the app, You can see the below window.
-The output value was displayed to upper case, after 1sec from the input.</p>
-<p><img alt="Launch the app" src="../images/launch-wpf-app.gif" /></p>
+<p>One different which compare the ReactiveProperty is that ReactivePropertySlim can't create from IObservable&lt;T&gt;.</p>
+<pre><code class="cs">// It isn't valid code.
+var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReactivePropertySlim();
+</code></pre>
+
+<p>If want to create Slim class's instance from IObservable&lt;T&gt;, then use the ToReadOnlyReactivePropertySlim extension method.</p>
+<pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReadOnlyReactivePropertySlim();
+</code></pre>
+
+<h2 id="dispatch-to-the-ui-thread">Dispatch to the UI thread</h2>
+<p>ReactivePropertySlim class doesn't dispatch to UI thread automaticaly.
+If want this feature, then use the ReactiveProperty or dispatch to UI thread expressly.</p>
+<pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1))
+    .ObserveOnUIDispatcher() // dispatch to UI thread
+    .ToReadOnlyReactivePropertySlim();
+</code></pre>
               
             </div>
           </div>
@@ -237,10 +202,10 @@ The output value was displayed to upper case, after 1sec from the input.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../uwp/" class="btn btn-neutral float-right" title="Universal Windows Platform">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Commanding/" class="btn btn-neutral float-right" title="Commanding">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ReactiveProperty/" class="btn btn-neutral" title="ReactiveProperty"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -266,10 +231,10 @@ The output value was displayed to upper case, after 1sec from the input.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../ReactiveProperty/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../uwp/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Commanding/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
