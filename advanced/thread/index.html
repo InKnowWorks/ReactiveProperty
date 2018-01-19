@@ -125,6 +125,12 @@
     <li class="toctree-l3"><a href="#change-the-gloabl-scheduler">Change the gloabl scheduler</a></li>
     
 
+    <li class="toctree-l3"><a href="#rx-operator">Rx operator</a></li>
+    
+
+    <li class="toctree-l3"><a href="#limitations">Limitations</a></li>
+    
+
     </ul>
                 </li>
     </ul>
@@ -199,6 +205,27 @@ var immediateRp = new ReactiveProperty&lt;string&gt;();
 taskPoolRp.Value = &quot;changed&quot;; // raise event on the TaskPoolScheduler thread.
 immediateRp.Value = &quot;changed&quot;; // raise event on the ImmediateScheduler thread.
 </code></pre>
+
+<h1 id="rx-operator">Rx operator</h1>
+<p>Of cource, you can use ObserveOn extension method.</p>
+<pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1))
+    .ObserveOn(someScheduler)
+    .ToReactiveProperty();
+</code></pre>
+
+<p>And we provide ObserveOnUIDispatcher extension method. 
+This is a shortcut of <code>ObserveOn(ReactiveProeprtyScheduler.Default)</code>.</p>
+<pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1))
+    .ObserveOnUIDispatcher()
+    .ToReactiveProperty();
+</code></pre>
+
+<h1 id="limitations">Limitations</h1>
+<p>ReactiveProperty was designed for single UI thread platform.
+It means it doesn't work on the multi UI thread platform which is like UWP platform.</p>
+<p>UWP has multi UI thread in the single process when multi Window create.
+If you create multi-window in UWP, then should set ImmediateScheduler to ReactivePropertyScheduler, when the app was launched.
+Or use ReactivePropertySlim / ReadOnlyReactivePropertySlim classes.</p>
               
             </div>
           </div>
