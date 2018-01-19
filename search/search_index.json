@@ -351,6 +351,21 @@
             "title": "Transfer event to ViewModel from View"
         },
         {
+            "location": "/advanced/thread/",
+            "text": "ReactiveProperty provides execution thread control feature.\nReactiveProperty raise PropertyChanged event on UI thread automaticaly. \n\n\nChange the scheduler\n\n\nYou can change this behavior using IScheduler.\nWhen the instance creation time, set IScheduler instance to raiseEventScheduler argument.\n\n\nvar rp = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReactiveProperty(raiseEventScheduler: ImmediateScheduler.Instance);\n\n\n\n\nReactiveCollection and ReadOnlyReactiveCollection raise CollectionChanged event on UI thread same as ReactiveProperty.\nThis behavior can be changed using the scheduler constructor and factory method argument.\n\n\nvar collection = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReactiveCollection(scheduler: ImmediateScheduler.Instance);\n\nvar readOnlyCollection = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReadOnlyReactiveProperty(scheduler: ImmediateScheduler.Instance);\n\n\n\n\nChange the gloabl scheduler\n\n\nCan change the ReactiveProperty's default scheduler using ReactivePropertyScheduler.SetDefault method.\n\n\nReactivePropertyScheduler.SetDefault(TaskPoolScheduler.Default);\nvar taskPoolRp = new ReactiveProperty<string>();\nReactivePropertyScheduler.SetDefault(ImmediateScheduler.Instance);\nvar immediateRp = new ReactiveProperty<string>();\n\ntaskPoolRp.Value = \"changed\"; // raise event on the TaskPoolScheduler thread.\nimmediateRp.Value = \"changed\"; // raise event on the ImmediateScheduler thread.",
+            "title": "Thread control"
+        },
+        {
+            "location": "/advanced/thread/#change-the-scheduler",
+            "text": "You can change this behavior using IScheduler.\nWhen the instance creation time, set IScheduler instance to raiseEventScheduler argument.  var rp = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReactiveProperty(raiseEventScheduler: ImmediateScheduler.Instance);  ReactiveCollection and ReadOnlyReactiveCollection raise CollectionChanged event on UI thread same as ReactiveProperty.\nThis behavior can be changed using the scheduler constructor and factory method argument.  var collection = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReactiveCollection(scheduler: ImmediateScheduler.Instance);\n\nvar readOnlyCollection = Observable.Interval(TimeSpan.FromSeconds(1))\n    .ToReadOnlyReactiveProperty(scheduler: ImmediateScheduler.Instance);",
+            "title": "Change the scheduler"
+        },
+        {
+            "location": "/advanced/thread/#change-the-gloabl-scheduler",
+            "text": "Can change the ReactiveProperty's default scheduler using ReactivePropertyScheduler.SetDefault method.  ReactivePropertyScheduler.SetDefault(TaskPoolScheduler.Default);\nvar taskPoolRp = new ReactiveProperty<string>();\nReactivePropertyScheduler.SetDefault(ImmediateScheduler.Instance);\nvar immediateRp = new ReactiveProperty<string>();\n\ntaskPoolRp.Value = \"changed\"; // raise event on the TaskPoolScheduler thread.\nimmediateRp.Value = \"changed\"; // raise event on the ImmediateScheduler thread.",
+            "title": "Change the gloabl scheduler"
+        },
+        {
             "location": "/samples/",
             "text": "Sample programs see below:\n\n\nWPF sample\n\n\nMVVM pattern and Reactive programming sample\n\n\nUWP sample\n\n\nUWPTodoMVVM project in Sample folder\n is like \nTodoMVC\n todo application.",
             "title": "Samples"

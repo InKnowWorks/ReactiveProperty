@@ -8,7 +8,7 @@
   
   <meta name="author" content="neuecc, xin9le, okazuki">
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>ReactivePropertySlim - ReactiveProperty documentation</title>
+  <title>Thread control - ReactiveProperty documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "ReactivePropertySlim";
-    var mkdocs_page_input_path = "features\\ReactivePropertySlim.md";
-    var mkdocs_page_url = "/features/ReactivePropertySlim/";
+    var mkdocs_page_name = "Thread control";
+    var mkdocs_page_input_path = "advanced\\thread.md";
+    var mkdocs_page_url = "/advanced/thread/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -77,49 +77,35 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../ReactiveProperty/">ReactiveProperty</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">ReactivePropertySlim</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#reactivepropertyslim">ReactivePropertySlim</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dispatch-to-ui-thread">Dispatch to UI thread</a></li>
-        
-            <li><a class="toctree-l4" href="#validation">Validation</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../../features/ReactiveProperty/">ReactiveProperty</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Commanding/">Commanding</a>
+    <a class="" href="../../features/ReactivePropertySlim/">ReactivePropertySlim</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Collections/">Collections</a>
+    <a class="" href="../../features/Commanding/">Commanding</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
+    <a class="" href="../../features/Collections/">Collections</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Notifiers/">Useful classes which implement IObservable</a>
+    <a class="" href="../../features/Work-together-with-plane-model-layer-objects/">Work together with plane model layer objects</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Extension-methods/">Extension methods</a>
+    <a class="" href="../../features/Notifiers/">Useful classes which implement IObservable</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
+    <a class="" href="../../features/Extension-methods/">Extension methods</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../features/Event-transfer-to-ViewModel-from-View/">Transfer event to ViewModel from View</a>
                 </li>
     </ul>
 	    </li>
@@ -128,9 +114,18 @@
 		
     <span class="caption-text">Advanced topcs</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../advanced/thread/">Thread control</a>
+    <a class="current" href="./">Thread control</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#change-the-scheduler">Change the scheduler</a></li>
+    
+
+    <li class="toctree-l3"><a href="#change-the-gloabl-scheduler">Change the gloabl scheduler</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -162,11 +157,11 @@
     
       
         
-          <li>Features &raquo;</li>
+          <li>Advanced topcs &raquo;</li>
         
       
     
-    <li>ReactivePropertySlim</li>
+    <li>Thread control</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -176,49 +171,34 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="reactivepropertyslim">ReactivePropertySlim</h1>
-<p>ReactivePropertySlim is a lightweight version ReactiveProperty.</p>
-<p>ReactivePropertySlim provides following features:</p>
-<ul>
-<li>Implements INotifyPropertyChanged interface.</li>
-<li>Implements IObservable&lt;T&gt; interface.</li>
-<li>Provides a Value property.</li>
-<li>Provides a ForceNotify method.</li>
-</ul>
-<p>And ReactivePropertySlim is high performance.</p>
-<p>This class can use like same as ReactiveProperty.</p>
-<pre><code class="cs">var rp = new ReactivePropertySlim&lt;string&gt;(&quot;neuecc&quot;);
-rp.Select(x =&gt; $&quot;{x}-san&quot;).Subscribe(x =&gt; Console.WriteLine(x));
-rp.Value = &quot;xin9le&quot;;
-rp.Value = &quot;okazuki&quot;;
-</code></pre>
-
-<p>Output is as below.</p>
-<pre><code>neuecc-san
-xin9le-san
-okazuki-san
-</code></pre>
-
-<p>One different which compare the ReactiveProperty is that ReactivePropertySlim can't create from IObservable&lt;T&gt;.</p>
-<pre><code class="cs">// It isn't valid code.
-var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReactivePropertySlim();
-</code></pre>
-
-<p>If want to create Slim class's instance from IObservable&lt;T&gt;, then use the ToReadOnlyReactivePropertySlim extension method.</p>
-<pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1)).ToReadOnlyReactivePropertySlim();
-</code></pre>
-
-<h2 id="dispatch-to-ui-thread">Dispatch to UI thread</h2>
-<p>ReactivePropertySlim class doesn't dispatch to UI thread automaticaly.
-If want this feature, then use the ReactiveProperty or dispatch to UI thread expressly.</p>
+                <p>ReactiveProperty provides execution thread control feature.
+ReactiveProperty raise PropertyChanged event on UI thread automaticaly. </p>
+<h1 id="change-the-scheduler">Change the scheduler</h1>
+<p>You can change this behavior using IScheduler.
+When the instance creation time, set IScheduler instance to raiseEventScheduler argument.</p>
 <pre><code class="cs">var rp = Observable.Interval(TimeSpan.FromSeconds(1))
-    .ObserveOnUIDispatcher() // dispatch to UI thread
-    .ToReadOnlyReactivePropertySlim();
+    .ToReactiveProperty(raiseEventScheduler: ImmediateScheduler.Instance);
 </code></pre>
 
-<h2 id="validation">Validation</h2>
-<p>Slim class doesn't provide the validation feature.
-If want to this feature, then use to ReactiveProperty class.</p>
+<p>ReactiveCollection and ReadOnlyReactiveCollection raise CollectionChanged event on UI thread same as ReactiveProperty.
+This behavior can be changed using the scheduler constructor and factory method argument.</p>
+<pre><code class="cs">var collection = Observable.Interval(TimeSpan.FromSeconds(1))
+    .ToReactiveCollection(scheduler: ImmediateScheduler.Instance);
+
+var readOnlyCollection = Observable.Interval(TimeSpan.FromSeconds(1))
+    .ToReadOnlyReactiveProperty(scheduler: ImmediateScheduler.Instance);
+</code></pre>
+
+<h1 id="change-the-gloabl-scheduler">Change the gloabl scheduler</h1>
+<p>Can change the ReactiveProperty's default scheduler using ReactivePropertyScheduler.SetDefault method.</p>
+<pre><code class="cs">ReactivePropertyScheduler.SetDefault(TaskPoolScheduler.Default);
+var taskPoolRp = new ReactiveProperty&lt;string&gt;();
+ReactivePropertyScheduler.SetDefault(ImmediateScheduler.Instance);
+var immediateRp = new ReactiveProperty&lt;string&gt;();
+
+taskPoolRp.Value = &quot;changed&quot;; // raise event on the TaskPoolScheduler thread.
+immediateRp.Value = &quot;changed&quot;; // raise event on the ImmediateScheduler thread.
+</code></pre>
               
             </div>
           </div>
@@ -226,10 +206,10 @@ If want to this feature, then use to ReactiveProperty class.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Commanding/" class="btn btn-neutral float-right" title="Commanding">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../samples/" class="btn btn-neutral float-right" title="Samples">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../ReactiveProperty/" class="btn btn-neutral" title="ReactiveProperty"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../features/Event-transfer-to-ViewModel-from-View/" class="btn btn-neutral" title="Transfer event to ViewModel from View"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -255,10 +235,10 @@ If want to this feature, then use to ReactiveProperty class.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../ReactiveProperty/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../features/Event-transfer-to-ViewModel-from-View/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Commanding/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../samples/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
