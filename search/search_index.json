@@ -52,18 +52,23 @@
         },
         {
             "location": "/getting-started/xf/",
-            "text": "Create a project\n\n\n\n\nCreate a Cross Platform app (Xamarin.Forms) project.\n\n\nSetting the \nNew Cross Platform App\n dialog like following.\n  Choice the .NET Standard project. Of couse you can select shared project.\n  \n\n\nInstall ReactiveProperty to all projects from NGet.\n\n\n\n\nEdit codes\n\n\nTBD",
+            "text": "Create a project\n\n\n\n\nCreate a Cross Platform app (Xamarin.Forms) project.\n\n\nSetting the \nNew Cross Platform App\n dialog like following.\n  Choice the .NET Standard project. Of couse you can select shared project.\n  \n\n\nInstall ReactiveProperty to all projects from NuGet.\n\n\n\n\nEdit codes\n\n\n\n\nCreate MainPageViewModel.cs to .NET Standard project.\n\n\nEdit file like following.\n\n\n\n\nMainPageViewModel.cs\n\n\nusing Reactive.Bindings;\nusing System;\nusing System.Reactive.Linq;\n\nnamespace GettingStartedXF\n{\n    public class MainPageViewModel\n    {\n        public ReactiveProperty<string> Input { get; }\n        public ReadOnlyReactiveProperty<string> Output { get; }\n\n        public MainPageViewModel()\n        {\n            Input = new ReactiveProperty<string>(\"\");\n            Output = Input\n                .Delay(TimeSpan.FromSeconds(1))\n                .Select(x => x.ToUpper())\n                .ToReadOnlyReactiveProperty();\n        }\n    }\n}\n\n\n\n\nMainPage.xaml\n\n\n<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<ContentPage xmlns=\"http://xamarin.com/schemas/2014/forms\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:local=\"clr-namespace:GettingStartedXF\"\n             x:Class=\"GettingStartedXF.MainPage\">\n    <ContentPage.BindingContext>\n        <local:MainPageViewModel />\n    </ContentPage.BindingContext>\n    <StackLayout>\n        <Entry Text=\"{Binding Input.Value, UpdateSourceEventName=TextChanged}\" />\n        <Label Text=\"{Binding Output.Value}\" />\n    </StackLayout>\n</ContentPage>\n\n\n\n\nLaunch the application.\n\n\nAfter launch the app, you can see below window.\nThe output value was displayed to upper case, after 1sec from the input.",
             "title": "Xamarin.Forms"
         },
         {
             "location": "/getting-started/xf/#create-a-project",
-            "text": "Create a Cross Platform app (Xamarin.Forms) project.  Setting the  New Cross Platform App  dialog like following.\n  Choice the .NET Standard project. Of couse you can select shared project.\n    Install ReactiveProperty to all projects from NGet.",
+            "text": "Create a Cross Platform app (Xamarin.Forms) project.  Setting the  New Cross Platform App  dialog like following.\n  Choice the .NET Standard project. Of couse you can select shared project.\n    Install ReactiveProperty to all projects from NuGet.",
             "title": "Create a project"
         },
         {
             "location": "/getting-started/xf/#edit-codes",
-            "text": "TBD",
+            "text": "Create MainPageViewModel.cs to .NET Standard project.  Edit file like following.   MainPageViewModel.cs  using Reactive.Bindings;\nusing System;\nusing System.Reactive.Linq;\n\nnamespace GettingStartedXF\n{\n    public class MainPageViewModel\n    {\n        public ReactiveProperty<string> Input { get; }\n        public ReadOnlyReactiveProperty<string> Output { get; }\n\n        public MainPageViewModel()\n        {\n            Input = new ReactiveProperty<string>(\"\");\n            Output = Input\n                .Delay(TimeSpan.FromSeconds(1))\n                .Select(x => x.ToUpper())\n                .ToReadOnlyReactiveProperty();\n        }\n    }\n}  MainPage.xaml  <?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<ContentPage xmlns=\"http://xamarin.com/schemas/2014/forms\"\n             xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"\n             xmlns:local=\"clr-namespace:GettingStartedXF\"\n             x:Class=\"GettingStartedXF.MainPage\">\n    <ContentPage.BindingContext>\n        <local:MainPageViewModel />\n    </ContentPage.BindingContext>\n    <StackLayout>\n        <Entry Text=\"{Binding Input.Value, UpdateSourceEventName=TextChanged}\" />\n        <Label Text=\"{Binding Output.Value}\" />\n    </StackLayout>\n</ContentPage>",
             "title": "Edit codes"
+        },
+        {
+            "location": "/getting-started/xf/#launch-the-application",
+            "text": "After launch the app, you can see below window.\nThe output value was displayed to upper case, after 1sec from the input.",
+            "title": "Launch the application."
         },
         {
             "location": "/features/ReactiveProperty/",

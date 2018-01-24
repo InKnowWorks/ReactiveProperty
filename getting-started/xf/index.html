@@ -78,6 +78,9 @@
         </ul>
     
 
+    <li class="toctree-l3"><a href="#launch-the-application">Launch the application.</a></li>
+    
+
     </ul>
                 </li>
     </ul>
@@ -180,10 +183,58 @@
 <li>Setting the <code>New Cross Platform App</code> dialog like following.
   Choice the .NET Standard project. Of couse you can select shared project.
   <img alt="New Cross Platform App dialog" src="../images/xf-create-project.png" /></li>
-<li>Install ReactiveProperty to all projects from NGet.</li>
+<li>Install ReactiveProperty to all projects from NuGet.</li>
 </ul>
 <h3 id="edit-codes">Edit codes</h3>
-<p>TBD</p>
+<ul>
+<li>Create MainPageViewModel.cs to .NET Standard project.</li>
+<li>Edit file like following.</li>
+</ul>
+<p>MainPageViewModel.cs</p>
+<pre><code class="cs">using Reactive.Bindings;
+using System;
+using System.Reactive.Linq;
+
+namespace GettingStartedXF
+{
+    public class MainPageViewModel
+    {
+        public ReactiveProperty&lt;string&gt; Input { get; }
+        public ReadOnlyReactiveProperty&lt;string&gt; Output { get; }
+
+        public MainPageViewModel()
+        {
+            Input = new ReactiveProperty&lt;string&gt;(&quot;&quot;);
+            Output = Input
+                .Delay(TimeSpan.FromSeconds(1))
+                .Select(x =&gt; x.ToUpper())
+                .ToReadOnlyReactiveProperty();
+        }
+    }
+}
+</code></pre>
+
+<p>MainPage.xaml</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
+             xmlns:local=&quot;clr-namespace:GettingStartedXF&quot;
+             x:Class=&quot;GettingStartedXF.MainPage&quot;&gt;
+    &lt;ContentPage.BindingContext&gt;
+        &lt;local:MainPageViewModel /&gt;
+    &lt;/ContentPage.BindingContext&gt;
+    &lt;StackLayout&gt;
+        &lt;Entry Text=&quot;{Binding Input.Value, UpdateSourceEventName=TextChanged}&quot; /&gt;
+        &lt;Label Text=&quot;{Binding Output.Value}&quot; /&gt;
+    &lt;/StackLayout&gt;
+&lt;/ContentPage&gt;
+</code></pre>
+
+<h1 id="launch-the-application">Launch the application.</h1>
+<p>After launch the app, you can see below window.
+The output value was displayed to upper case, after 1sec from the input.</p>
+<p><img alt="Launch the app" src="../images/launch-xf-app-android.gif" /></p>
+<p><img alt="Launch the app" src="../images/launch-xf-app-uwp.gif" /></p>
               
             </div>
           </div>
