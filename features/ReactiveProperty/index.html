@@ -614,6 +614,35 @@ rp.ForceNotify();
 <pre><code>value                  # first subscribe
 value                  # by the ForceNotify method
 Value changed          # by the ForceNotify method
+
+## Change comparer logic
+
+Can change comparer logic by the equalityComparer argument of constructor and factory methods.
+
+For example, ignore case comparer:
+
+```cs
+class IgnoreCaseComparer : EqualityComparer&lt;string&gt;
+{
+    public override bool Equals(string x, string y)
+        =&gt; x?.ToLower() == y?.ToLower();
+
+    public override int GetHashCode(string obj)
+        =&gt; (obj?.ToLower()).GetHashCode();
+}
+
+// Constructor
+var rp = new ReactiveProperty&lt;string&gt;(equalityComparer: new IgnoreCaseComparer());
+rp.Value = &quot;Hello world&quot;; // change to &quot;Hello world&quot; from null
+rp.Value = &quot;HELLO WORLD&quot;; // don't change
+rp.Value = &quot;Hello japan&quot;; // change to &quot;Hello japan&quot; from &quot;Hello world&quot;
+
+// Factory method
+var source = new Subject&lt;string&gt;();
+var rp = source.ToReactiveProperty(equalityComparer: new IgnoreCaseComparer());
+source.OnNext(&quot;Hello world&quot;); // change to &quot;Hello world&quot; from null
+source.OnNext(&quot;HELLO WORLD&quot;); // don't change
+source.OnNext(&quot;Hello japan&quot;); // change to &quot;Hello japan&quot; from &quot;Hello world&quot;
 </code></pre>
 
 <h2 id="readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</h2>
