@@ -119,6 +119,9 @@
     <li class="toctree-l3"><a href="#forcenotify">ForceNotify</a></li>
     
 
+    <li class="toctree-l3"><a href="#change-comparer-logic">Change comparer logic</a></li>
+    
+
     <li class="toctree-l3"><a href="#readonlyreactiveproperty-class">ReadOnlyReactiveProperty class</a></li>
     
 
@@ -614,15 +617,12 @@ rp.ForceNotify();
 <pre><code>value                  # first subscribe
 value                  # by the ForceNotify method
 Value changed          # by the ForceNotify method
+</code></pre>
 
-## Change comparer logic
-
-Can change comparer logic by the equalityComparer argument of constructor and factory methods.
-
-For example, ignore case comparer:
-
-```cs
-class IgnoreCaseComparer : EqualityComparer&lt;string&gt;
+<h2 id="change-comparer-logic">Change comparer logic</h2>
+<p>Can change comparer logic by the equalityComparer argument of constructor and factory methods.</p>
+<p>For example, ignore case comparer:</p>
+<pre><code class="cs">class IgnoreCaseComparer : EqualityComparer&lt;string&gt;
 {
     public override bool Equals(string x, string y)
         =&gt; x?.ToLower() == y?.ToLower();
