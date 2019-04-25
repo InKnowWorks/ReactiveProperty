@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -28,14 +29,17 @@ namespace Reactive.Bindings
                 MemberName = nameof(ReactiveProperty<T>.Value)
             };
 
-            if (attrs.Length != 0) {
-                self.SetValidateNotifyError(x => {
-                    try {
-                        Validator.ValidateValue(x, context, attrs);
+            if (attrs.Length != 0)
+            {
+                self.SetValidateNotifyError(x =>
+                {
+                    var validationResults = new List<ValidationResult>();
+                    if (Validator.TryValidateValue(x, context, validationResults, attrs))
+                    {
                         return null;
-                    } catch (ValidationException ex) {
-                        return ex.ValidationResult.ErrorMessage;
                     }
+
+                    return validationResults[0].ErrorMessage;
                 });
             }
 
