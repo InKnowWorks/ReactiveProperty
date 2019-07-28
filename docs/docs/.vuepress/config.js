@@ -13,6 +13,7 @@ module.exports = {
                     { text: 'Universal Windows Platform', link: '/getting-started/uwp.html' },
                     { text: 'Xamarin.Forms', link: '/getting-started/xf.html' },
                     { text: 'Avalonia', link: '/getting-started/avalonia.html' },
+                    { text: 'Add code snippets', link: '/getting-started/add-snippets.html' },
                 ]
             },
             {
@@ -33,6 +34,7 @@ module.exports = {
                 items: [
                     { text: 'Thread control', link: '/advanced/thread.html' },
                     { text: 'Work with await operator', link: '/advanced/awaitable.html' },
+                    { text: 'Work with other MVVM Frameworks', link: '/advanced/work-with-other-mvvm-framwork.html' },
                 ]
             },
             { text: 'Samples', link: '/samples.html' },
@@ -42,6 +44,6 @@ module.exports = {
         docsRepo: 'runceel/ReactiveProperty',
         docsDir: 'docs/docs',
         editLinks: true,
-        editLinkText: 'Help us improve this page!',
+        editLinkText: 'Help us improve this document!',
     }
 }
