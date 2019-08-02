@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using Microsoft.Reactive.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
 namespace ReactiveProperty.Tests.Extensions
@@ -134,7 +132,8 @@ namespace ReactiveProperty.Tests.Extensions
                 x => "Age:" + x,  // convert
                 x => int.Parse(x.Replace("Age:", "")), // convertBack
                 ignoreValidationErrorValue: true)
-                .SetValidateNotifyError((string x) => {
+                .SetValidateNotifyError((string x) =>
+                {
                     // no use
                     return int.TryParse(x.Replace("Age:", ""), out var result) ? null : "error";
                 });
@@ -180,6 +179,38 @@ namespace ReactiveProperty.Tests.Extensions
 
             propY.Value = 200;
             model.Point.Is(x => x.Item1 == 100 && x.Item2 == 200);
+        }
+
+        [TestMethod]
+        public void ToReactivePropertyAsSynchronizedObservableCase()
+        {
+            var source = new ReactivePropertySlim<int>(100);
+            var target = source.ToReactivePropertyAsSynchronized(x => x.Value,
+                ox => ox.Select(x => x.ToString()),
+                ox => ox.Where(x => int.TryParse(x, out _)).Select(x => int.Parse(x)));
+
+            target.Value.Is("100");
+            target.Value = "10";
+            source.Value.Is(10);
+            target.Value = "xxx";
+            source.Value.Is(10);
+        }
+
+        [TestMethod]
+        public void ToReactivePropertyAsSynchronizedObservableWithIgnoreValidationErrorValueCase()
+        {
+            var source = new ReactivePropertySlim<int>(100);
+            var target = source.ToReactivePropertyAsSynchronized(x => x.Value,
+                ox => ox.Select(x => x.ToString()),
+                ox => ox.Select(x => int.Parse(x)),
+                ignoreValidationErrorValue: true);
+            target.SetValidateNotifyError(x => int.TryParse(x, out _) ? null : "Error");
+
+            target.Value.Is("100");
+            target.Value = "10";
+            source.Value.Is(10);
+            target.Value = "xxx";
+            source.Value.Is(10);
         }
 
         private class Model : INotifyPropertyChanged

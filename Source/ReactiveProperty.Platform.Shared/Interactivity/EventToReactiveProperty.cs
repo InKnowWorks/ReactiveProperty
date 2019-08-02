@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Subjects;
-using System.Windows.Input;
 using System.Reactive.Linq;
 using Reactive.Bindings.Extensions;
 
@@ -10,7 +9,7 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml;
 using System.Collections.Generic;
 #else
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Markup;
 using System.ComponentModel;
 using System.Windows;
@@ -75,9 +74,11 @@ namespace Reactive.Bindings.Interactivity
         /// <param name="parameter">The parameter.</param>
         protected override void Invoke(object parameter)
         {
-            if (disposable == null) {
+            if (disposable == null)
+            {
                 IObservable<object> ox = source;
-                foreach (var c in Converters) {
+                foreach (var c in Converters)
+                {
                     c.AssociateObject = AssociatedObject;
                     ox = c.Convert(ox);
                 }
@@ -87,9 +88,12 @@ namespace Reactive.Bindings.Interactivity
                     .Subscribe(x => ReactiveProperty.Value = x);
             }
 
-            if (!IgnoreEventArgs) {
+            if (!IgnoreEventArgs)
+            {
                 source.OnNext(parameter);
-            } else {
+            }
+            else
+            {
                 source.OnNext(Unit.Default);
             }
         }
